@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'contas_conta_list' %}">Conta Listing</a></p>
+<table class="table">
+<tr><td>nome</td><td>{{ object.nome }}</td></tr>
+<tr><td>data_inclusao</td><td>{{ object.data_inclusao }}</td></tr>
+<tr><td>data_alteracao</td><td>{{ object.data_alteracao }}</td></tr>
+<tr><td>tipo_conta</td><td>{{ object.tipo_conta }}</td></tr>
+<tr><td>saldo_conta</td><td>{{ object.saldo_conta }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Conta</a>
+
+{% endblock %}
