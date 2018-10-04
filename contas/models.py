@@ -18,7 +18,7 @@ TIPO_FATURA = (
 class Fatura(models.Model):
 
     # Fields
-    Descricao = models.CharField(max_length=255)
+    descricao = models.CharField(max_length=255)
     data_inclusao = models.DateTimeField(auto_now_add=True, editable=False)
     data_alteracao = models.DateTimeField(auto_now=True, editable=False)
     data_vencimento = models.DateTimeField(null=False)

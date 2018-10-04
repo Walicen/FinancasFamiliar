@@ -16,7 +16,7 @@
     <td>desconto</td>
     <td>juro</td>
 </tr>
-{% for object in object_list %}
+{% for fatura in faturas %}
 <tr>
     <td>{{object.pk}}</td>
     <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>

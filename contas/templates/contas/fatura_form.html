@@ -1,11 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% block content %}
-<p><a class="btn btn-default" href="{% url 'contas_fatura_list' %}">Fatura Listing</a></p>
-<form method="post">
-{% csrf_token %}
-{{form|crispy}}
-<button class="btn btn-primary" type="submit">Submit</button>
-</form>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.descricao }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                        </div>
+                        {{ form.data_vencimento }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a class="btn btn-default" href="{% url 'contas_fatura_list' %}">Gerenciar</a>
+    </form>
 {% endblock %}

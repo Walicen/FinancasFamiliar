@@ -1,11 +1,38 @@
-<html>
+<!doctype html>
+<html lang="en">
+    {% load static %}
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Favicon -->
+        <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        <!-- Icons -->
+        <link href="{% static 'assets/vendor/nucleo/css/nucleo.min.css"' %} rel="stylesheet">
+        <link href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css'%}/" rel="stylesheet">
+
+        <!-- Argon CSS -->
+        <link type="text/css" href="{% static 'assets/css/argon.min.css' %}" rel="stylesheet">
 
     </head>
-    <body>{% block content %}Replace this.{% endblock %}
+    <body>
+    <div class="container">
+    {% block content %}{% endblock %}
+    </div>
+
+    <!-- Core -->
+    <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+     <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
+    <!-- Argon JS -->
+    <script src="{% static 'assets/js/argon.min.js' %}"></script>
+
+
     </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
 </html>

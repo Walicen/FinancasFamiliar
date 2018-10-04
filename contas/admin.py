@@ -11,8 +11,8 @@ class FaturaAdminForm(forms.ModelForm):
 
 class FaturaAdmin(admin.ModelAdmin):
     form = FaturaAdminForm
-    list_display = ['Descricao', 'data_inclusao', 'data_alteracao', 'data_vencimento', 'data_pagamento', 'tipo_fatura', 'valor_fatura', 'valor_pago', 'desconto', 'juro']
-    readonly_fields = ['Descricao', 'data_inclusao', 'data_alteracao', 'data_vencimento', 'data_pagamento', 'tipo_fatura', 'valor_fatura', 'valor_pago', 'desconto', 'juro']
+    list_display = ['descricao', 'data_inclusao', 'data_alteracao', 'data_vencimento', 'data_pagamento', 'tipo_fatura', 'valor_fatura', 'valor_pago', 'desconto', 'juro']
+    readonly_fields = ['descricao', 'data_inclusao', 'data_alteracao', 'data_vencimento', 'data_pagamento', 'tipo_fatura', 'valor_fatura', 'valor_pago', 'desconto', 'juro']
 
 admin.site.register(Fatura, FaturaAdmin)
 
