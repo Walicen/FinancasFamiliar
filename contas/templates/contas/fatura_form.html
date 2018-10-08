@@ -2,6 +2,11 @@
 {% load static %}
 {% block content %}
 
+
+
+    <div class="card">
+    <div class="card-body">
+    <h5 class="card-title">Card title</h5>
     <form method="post">
         {% csrf_token %}
         <div class="row">
@@ -22,8 +27,24 @@
                 </div>
             </div>
 
+             <div class="col-md-6">
+                <div class="form-group">
+
+                    {{ form.valor_fatura }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+
+                    {{ form.teste }}
+                </div>
+            </div>
+
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
         <a class="btn btn-default" href="{% url 'contas_fatura_list' %}">Gerenciar</a>
     </form>
+    </div>
+    </div>
 {% endblock %}

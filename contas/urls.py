@@ -17,7 +17,7 @@ urlpatterns = (
 urlpatterns += (
     # urls for Fatura
     path('fatura/', views.FaturaListView.as_view(), name='contas_fatura_list'),
-    path('fatura/create/', views.FaturaCreateView.as_view(), name='contas_fatura_create'),
+    path('fatura/create/', views.FaturaPagarCreateView.as_view(), name='contas_fatura_create'),
     path('fatura/detail/<int:pk>/', views.FaturaDetailView.as_view(), name='contas_fatura_detail'),
     path('fatura/update/<int:pk>/', views.FaturaUpdateView.as_view(), name='contas_fatura_update'),
 )

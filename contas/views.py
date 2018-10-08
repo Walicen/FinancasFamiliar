@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 from .models import Fatura, Conta
@@ -10,18 +10,27 @@ class FaturaListView(ListView):
     model = Fatura
     context_object_name = 'faturas'
 
-class FaturaCreateView(View):
+class FaturaPagarCreateView(View):
     model = Fatura
 
     def get(self, *args, **kwargs):
         form = FaturaForm()
-        form.data_vencimento = datetime.datetime.now()
-        form.descricao ='teste'
         data = {
             'form': form,
         }
 
         return render(self.request, 'contas/fatura_form.html', data)
+
+    def post(self, *args, **kwargs):
+        form = self.request.POST or None
+        fatura = Fatura()
+        fatura.tipo_fatura = 'P'
+        fatura.descricao = form['descricao']
+        fatura.data_vencimento = form['data_vencimento']
+        fatura.valor_fatura = form['valor_fatura']
+        fatura.save()
+        return redirect('contas_fatura_list')
+
 
 class FaturaDetailView(DetailView):
     model = Fatura
