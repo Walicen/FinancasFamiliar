@@ -18,19 +18,19 @@
 </tr>
 {% for fatura in faturas %}
 <tr>
-    <td>{{object.pk}}</td>
-    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
-    <td>{{ object.Descricao }}</td>
-    <td>{{ object.data_inclusao }}</td>
-    <td>{{ object.data_alteracao }}</td>
-    <td>{{ object.data_vencimento }}</td>
-    <td>{{ object.data_pagamento }}</td>
-    <td>{{ object.tipo_fatura }}</td>
-    <td>{{ object.valor_fatura }}</td>
-    <td>{{ object.valor_pago }}</td>
-    <td>{{ object.desconto }}</td>
-    <td>{{ object.juro }}</td>
+    <td>{{fatura.pk}}</td>
+    <td><a href="{{fatura.get_absolute_url}}">{{fatura}}</a></td>
+    <td>{{ fatura.Descricao }}</td>
+    <td>{{ fatura.data_inclusao }}</td>
+    <td>{{ fatura.data_alteracao }}</td>
+    <td>{{ fatura.data_vencimento }}</td>
+    <td>{{ fatura.data_pagamento }}</td>
+    <td>{{ fatura.tipo_fatura }}</td>
+    <td>{{ fatura.valor_fatura }}</td>
+    <td>{{ fatura.valor_pago }}</td>
+    <td>{{ fatura.desconto }}</td>
+    <td>{{ fatura.juro }}</td>
 </tr>
 {% endfor %}
-</table><a class="btn btn-primary" href="{% url 'contas_fatura_create' %}">Create new Fatura</a>
+</table><a class="btn btn-primary" href="{% url 'contas_fatura_create' %}">Nova Fatura</a>
 {% endblock %}

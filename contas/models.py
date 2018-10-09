@@ -43,13 +43,13 @@ class Fatura(models.Model):
     data_inclusao = models.DateTimeField(auto_now_add=True, editable=False)
     data_alteracao = models.DateTimeField(auto_now=True, editable=False)
     data_vencimento = models.DateTimeField(null=False)
-    data_pagamento = models.DateTimeField()
+    data_pagamento = models.DateTimeField(null=True)
     tipo_fatura = models.CharField(max_length=1, choices=TIPO_FATURA)
     valor_fatura = models.DecimalField( max_digits = 10 , decimal_places = 2)
-    valor_pago = models.DecimalField( max_digits = 10 , decimal_places = 2)
-    desconto = models.DecimalField( max_digits = 10 , decimal_places = 2)
-    juro = models.DecimalField( max_digits = 10 , decimal_places = 2)
-    valor_total = models.DecimalField( max_digits = 10 , decimal_places = 2)
+    valor_pago = models.DecimalField( max_digits = 10 , decimal_places = 2, null=True)
+    desconto = models.DecimalField( max_digits = 10 , decimal_places = 2, null=True)
+    juro = models.DecimalField( max_digits = 10 , decimal_places = 2, null=True)
+    valor_total = models.DecimalField( max_digits = 10 , decimal_places = 2, null=True)
 
     conta = ForeignKey(Conta, on_delete=models.CASCADE, null=True)
 

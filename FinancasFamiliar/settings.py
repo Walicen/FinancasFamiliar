@@ -107,6 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DECIMAL_SEPARATOR = ','
+USE_THOUSAND_SEPARATOR = True
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

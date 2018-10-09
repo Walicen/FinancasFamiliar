@@ -22,15 +22,20 @@ class FaturaPagarCreateView(View):
         return render(self.request, 'contas/fatura_form.html', data)
 
     def post(self, *args, **kwargs):
-        form = self.request.POST or None
-        fatura = Fatura()
-        fatura.tipo_fatura = 'P'
-        fatura.descricao = form['descricao']
-        fatura.data_vencimento = form['data_vencimento']
-        fatura.valor_fatura = form['valor_fatura']
-        fatura.save()
-        return redirect('contas_fatura_list')
-
+        form = FaturaForm(self.request.POST or None)
+        data = {
+            'form' : form
+        }
+        if form.is_valid():
+            fatura = Fatura()
+            fatura.tipo_fatura = 'P'
+            fatura.descricao = form.cleaned_data['descricao']
+            fatura.data_vencimento = form.cleaned_data['data_vencimento']
+            fatura.valor_fatura = form.cleaned_data['valor_fatura']
+            fatura.save()
+            return redirect('contas_fatura_list')
+        else:
+            return render(self.request, 'contas/fatura_form.html', data)
 
 class FaturaDetailView(DetailView):
     model = Fatura
