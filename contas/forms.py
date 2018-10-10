@@ -12,7 +12,7 @@ class FaturaForm(forms.Form):
         self.fields['valor_fatura'].localize = True
         self.fields['valor_fatura'].widget.is_localized = True
 
-    valor_fatura = forms.DecimalField(max_digits=10, decimal_places=2, localize=True, widget=TextInput(attrs={'class': 'money form-control','placeholder': 'Valor Fatura'}))
+    valor_fatura = forms.DecimalField(max_digits=10, localize=True, widget=TextInput(attrs={'class': 'money form-control form-control-alternative', 'placeholder': 'Valor Fatura'}))
     descricao = forms.CharField(widget=TextInput(attrs={'class': 'form-control form-control-alternative', 'placeholder': 'Descrição'}))
     data_vencimento = forms.DateField(widget=DateInput(attrs={'class': 'form-control datepicker', 'placeholder': 'Data Vencimento'}))
 
