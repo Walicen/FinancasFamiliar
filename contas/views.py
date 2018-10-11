@@ -12,19 +12,19 @@ class FaturaListView(ListView):
 
 class FaturaPagarCreateView(View):
     model = Fatura
-
+    template = 'contas/fatura_form.html'
     def get(self, *args, **kwargs):
         form = FaturaForm()
         data = {
             'form': form,
         }
 
-        return render(self.request, 'contas/fatura_form.html', data)
+        return render(self.request, self.template, data)
 
     def post(self, *args, **kwargs):
         form = FaturaForm(self.request.POST or None)
         data = {
-            'form' : form
+            'form': form
         }
         if form.is_valid():
             fatura = Fatura()
@@ -35,7 +35,7 @@ class FaturaPagarCreateView(View):
             fatura.save()
             return redirect('contas_fatura_list')
         else:
-            return render(self.request, 'contas/fatura_form.html', data)
+            return render(self.request, self.template, data)
 
 class FaturaDetailView(DetailView):
     model = Fatura

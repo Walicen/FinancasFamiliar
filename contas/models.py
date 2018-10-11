@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from django.urls import reverse
 from django.db.models import *
 from django.contrib.contenttypes.models import ContentType
@@ -9,6 +10,11 @@ TIPO_FATURA = (
     ('P', 'Pagar'),
     ('R', 'Receber'),
 )
+
+
+class Perfil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    cor = models.CharField(max_length=7)
 
 class Conta(models.Model):
 
@@ -39,6 +45,7 @@ class Conta(models.Model):
 
 class Fatura(models.Model):
     # Fields
+    numero_sequencial = models.IntegerField(auto_created=True)
     descricao = models.CharField(max_length=255)
     data_inclusao = models.DateTimeField(auto_now_add=True, editable=False)
     data_alteracao = models.DateTimeField(auto_now=True, editable=False)
@@ -70,4 +77,13 @@ class Fatura(models.Model):
 
 
 
+def cria_perfil(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)
+
+#configurando o signal que detecta quando um usuario eh criado
+#ao detectar, executa a funcao acima (cria_user_payer) para termos o
+# "perfil" do jogador ligado ao usuario
+# vide documentacao: https://docs.djangoproject.com/en/1.4/topics/auth/#storing-additional-information-about-users
+post_save.connect(cria_perfil, sender=User)
 
