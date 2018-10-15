@@ -11,6 +11,12 @@ TIPO_FATURA = (
     ('R', 'Receber'),
 )
 
+TIPO_CONTA =(
+    ('CC', 'Conta Corrente'),
+    ('PO', 'Poupança'),
+    ('CA', 'Carteira'),
+)
+
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
@@ -22,7 +28,7 @@ class Conta(models.Model):
     nome = models.CharField(max_length=255)
     data_inclusao = models.DateTimeField(auto_now_add=True, editable=False)
     data_alteracao = models.DateTimeField(auto_now=True, editable=False)
-    tipo_conta = models.CharField(max_length=30)
+    tipo_conta = models.CharField(max_length=2, choices=TIPO_CONTA)
     saldo_conta = models.DecimalField( max_digits = 10 , decimal_places = 2)
 
     # Relationship Fields
@@ -45,7 +51,6 @@ class Conta(models.Model):
 
 class Fatura(models.Model):
     # Fields
-    numero_sequencial = models.IntegerField(auto_created=True)
     descricao = models.CharField(max_length=255)
     data_inclusao = models.DateTimeField(auto_now_add=True, editable=False)
     data_alteracao = models.DateTimeField(auto_now=True, editable=False)

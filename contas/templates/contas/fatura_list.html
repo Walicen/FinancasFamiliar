@@ -1,36 +1,34 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<p><a class="btn btn-default" href="{% url 'contas_fatura_list' %}">Fatura Listing</a></p>
-<table class="table">
-<tr>
-<td>ID</td><td>Link</td>
-    <td>Descricao</td>
-    <td>data_inclusao</td>
-    <td>data_alteracao</td>
-    <td>data_vencimento</td>
-    <td>data_pagamento</td>
-    <td>tipo_fatura</td>
-    <td>valor_fatura</td>
-    <td>valor_pago</td>
-    <td>desconto</td>
-    <td>juro</td>
-</tr>
-{% for fatura in faturas %}
-<tr>
-    <td>{{fatura.pk}}</td>
-    <td><a href="{{fatura.get_absolute_url}}">{{fatura}}</a></td>
-    <td>{{ fatura.Descricao }}</td>
-    <td>{{ fatura.data_inclusao }}</td>
-    <td>{{ fatura.data_alteracao }}</td>
-    <td>{{ fatura.data_vencimento }}</td>
-    <td>{{ fatura.data_pagamento }}</td>
-    <td>{{ fatura.tipo_fatura }}</td>
-    <td>{{ fatura.valor_fatura }}</td>
-    <td>{{ fatura.valor_pago }}</td>
-    <td>{{ fatura.desconto }}</td>
-    <td>{{ fatura.juro }}</td>
-</tr>
-{% endfor %}
-</table><a class="btn btn-primary" href="{% url 'contas_fatura_create' %}">Nova Fatura</a>
+    <div class="card">
+        <div class="card-body">
+        <h5 class="card-title">Conta a Pagar</h5>
+    <table class="table">
+    <tr>
+        <td>Ações</td>
+        <td>Número</td>
+        <td>tipo_fatura</td>
+        <td>Descricao</td>
+        <td>data_vencimento</td>
+        <td>valor_fatura</td>
+    </tr>
+    {% for fatura in faturas %}
+    <tr>
+
+        <td><a href="{{fatura.get_update_url}}">
+            <i class="fas fa-pen"></i></a>
+        </td>
+        <td>{{fatura.pk}}</td>
+        <td>{{ fatura.tipo_fatura }}</td>
+        <td>{{ fatura.Descricao }}</td>
+        <td>{{ fatura.data_vencimento }}</td>
+        <td>{{ fatura.valor_fatura }}</td>
+
+    </tr>
+    {% endfor %}
+    </table>
+            <a class="btn btn-primary" href="{% url 'contas_fatura_create' %}">Nova Fatura</a>
+        </div>
+    </div>
 {% endblock %}
