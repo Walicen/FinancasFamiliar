@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt">
     {% load static %}
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -40,7 +40,15 @@
     <script src="{% static 'assets/js/meuJs.js' %}"></script>
     <!-- Argon JS -->
     <script src="{% static 'assets/js/argon.min.js' %}"></script>
-
+    <script>
+  $(document).ready(function () {
+    $('#ex').datepicker({
+        format: "DD/MM/yy",
+        language: "pt-BR",
+        minViewMode: 0,
+    });
+  });
+</script>
 
     </body>
 

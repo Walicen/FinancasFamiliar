@@ -10,7 +10,7 @@ class FaturaForm(forms.Form):
 
     valor_fatura = forms.DecimalField(max_digits=10, localize=True, widget=TextInput(attrs={'class': 'money form-control form-control-alternative', 'placeholder': 'Valor Fatura'}))
     descricao = forms.CharField(widget=TextInput(attrs={'class': 'form-control form-control-alternative', 'placeholder': 'Descrição'}))
-    data_vencimento = forms.DateField(widget=DateInput(attrs={'class': 'form-control datepicker', 'placeholder': 'Data Vencimento'}))
+    data_vencimento = forms.DateField(widget=DateInput(attrs={'class': 'form-control', 'placeholder': 'Data Vencimento'}))
     
     descricao, data_vencimento, tipo_fatura, valor_fatura,
     
@@ -27,8 +27,8 @@ class FaturaForm(forms.ModelForm):
                                 'class': 'form-control form-control-alternative',
                                 'placeholder': 'Descrição',
                                 }),
-            'data_vencimento': DateInput(attrs={
-                                'class': 'form-control form-control-alternative datepicker',
+            'data_vencimento': DateInput(attrs={'id': 'ex',
+                                'class': 'datepicker form-control form-control-alternative',
                                 'placeholder': 'Data Vencimento'}),
 
             'tipo_fatura': Select(attrs={'class': 'form-control form-control-alternative',
@@ -38,7 +38,7 @@ class FaturaForm(forms.ModelForm):
                 'class': 'money form-control form-control-alternative',
                 'placeholder': 'Valor'}),
         }
-        localized_fields = {'valor_fatura', 'data_vencimento'}
+        localized_fields = {'valor_fatura'}
 
         labels = {
             'Descricao': 'Descrição',
@@ -46,11 +46,11 @@ class FaturaForm(forms.ModelForm):
             'tipo_fatura': 'Pagar / Receber',
             'valor_fatura': 'Valor'
         }
-
+        '''
         def __init__(self, *args, **kwargs):
             super(FaturaForm, self).__init__(*args, **kwargs)
             self.fields['data_vencimento'].widget.format = '%d/%m/%Y'
-
+        '''
 class ContaForm(forms.ModelForm):
     class Meta:
 
