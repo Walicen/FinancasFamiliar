@@ -10,32 +10,11 @@ class FaturaListView(ListView):
     model = Fatura
     context_object_name = 'faturas'
 
-class FaturaPagarCreateView(View):
+
+class FaturaPagarCreateView(CreateView):
     model = Fatura
-    template = 'contas/fatura_form.html'
-    def get(self, *args, **kwargs):
-        form = FaturaForm()
-        data = {
-            'form': form,
-        }
+    form_class = FaturaForm
 
-        return render(self.request, self.template, data)
-
-    def post(self, *args, **kwargs):
-        form = FaturaForm(self.request.POST or None)
-        data = {
-            'form': form
-        }
-        if form.is_valid():
-            fatura = Fatura()
-            fatura.tipo_fatura = 'P'
-            fatura.descricao = form.cleaned_data['descricao']
-            fatura.data_vencimento = form.cleaned_data['data_vencimento']
-            fatura.valor_fatura = form.cleaned_data['valor_fatura']
-            fatura.save()
-            return redirect('contas_fatura_list')
-        else:
-            return render(self.request, self.template, data)
 
 class FaturaDetailView(DetailView):
     model = Fatura

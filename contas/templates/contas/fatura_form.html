@@ -8,17 +8,27 @@
     <form method="post">
         {% csrf_token %}
         <div class="row">
+
+             <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.tipo_fatura.label }}
+                    {{ form.tipo_fatura }}
+                </div>
+            </div>
+
             <div class="col-md-6">
                 <div class="form-group">
+                     {{ form.descricao.label }}
                     {{ form.descricao }}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
+                     {{ form.data_vencimento.label }}
                     <div class="input-group input-group-alternative">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                         </div>
                         {{ form.data_vencimento }}
                     </div>
@@ -27,6 +37,7 @@
 
              <div class="col-md-6">
                 <div class="form-group">
+                    {{ form.valor_fatura.label}}
                     {{ form.valor_fatura}}
                 </div>
             </div>
