@@ -5,23 +5,11 @@ from input_mask.fields import DecimalField
 
 from .models import Fatura, Conta
 
-'''
-class FaturaForm(forms.Form):
-
-    valor_fatura = forms.DecimalField(max_digits=10, localize=True, widget=TextInput(attrs={'class': 'money form-control form-control-alternative', 'placeholder': 'Valor Fatura'}))
-    descricao = forms.CharField(widget=TextInput(attrs={'class': 'form-control form-control-alternative', 'placeholder': 'Descrição'}))
-    data_vencimento = forms.DateField(widget=DateInput(attrs={'class': 'form-control', 'placeholder': 'Data Vencimento'}))
-    
-    descricao, data_vencimento, tipo_fatura, valor_fatura,
-    
-'''
-
-
 class FaturaForm(forms.ModelForm):
     class Meta:
         model = Fatura
         fields = '__all__'
-        exclude = {'conta', 'data_pagamento', 'valor_pago', 'desconto', 'juro', 'valor_total'}
+        exclude = {'conta', 'data_pagamento', 'valor_pago', 'desconto', 'juro', 'valor_total', 'status'}
         widgets = {
             'descricao': TextInput(attrs={
                                 'class': 'form-control form-control-alternative',
@@ -51,6 +39,8 @@ class FaturaForm(forms.ModelForm):
             super(FaturaForm, self).__init__(*args, **kwargs)
             self.fields['data_vencimento'].widget.format = '%d/%m/%Y'
         '''
+
+
 class ContaForm(forms.ModelForm):
     class Meta:
 

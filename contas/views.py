@@ -9,6 +9,7 @@ from .forms import FaturaForm, ContaForm
 class FaturaListView(ListView):
     model = Fatura
     context_object_name = 'faturas'
+    paginate_by = 5
 
 
 class FaturaPagarCreateView(CreateView):

@@ -10,12 +10,18 @@ TIPO_FATURA = (
     ('R', 'Receber'),
 )
 
+
 TIPO_CONTA = (
     ('CC', 'Conta Corrente'),
     ('PO', 'Poupança'),
     ('CA', 'Carteira'),
 )
 
+STATUS = (
+    ('PE', 'Pendente'),
+    ('PG', 'Paga'),
+    ('VE', 'Vencida'),
+)
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
@@ -60,7 +66,7 @@ class Fatura(models.Model):
     desconto = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     juro = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
-
+    status = models.CharField(max_length=1, choices=STATUS, null=True)
     # relacionamento
     conta = ForeignKey(Conta, on_delete=models.CASCADE, null=True)
 
