@@ -4,7 +4,7 @@
 
     <div class="card">
     <div class="card-body">
-    <h5 class="card-title">Conta a Pagar</h5>
+    <h5 class="card-title">Nova Fatura</h5>
     <form method="post">
         {% csrf_token %}
         <div class="row">
@@ -41,11 +41,18 @@
                     {{ form.valor_fatura}}
                 </div>
             </div>
-
-
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
-        <a class="btn btn-default" href="{% url 'contas_fatura_list' %}">Gerenciar</a>
+
+        <button class="btn btn-primary" type="submit">
+            <i class="fas fa-save"></i>
+            Salvar
+        </button>
+
+        <a class="btn btn-default" href="{% url 'contas_fatura_list' %}">
+            <i class="fas fa-angle-left"></i>
+            Voltar
+        </a>
+
     </form>
     </div>
     </div>

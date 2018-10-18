@@ -27,7 +27,9 @@ class FaturaUpdateView(UpdateView):
 
 
 class ContaListView(ListView):
+    context_object_name = 'contas'
     model = Conta
+    paginate_by = 5
 
 
 class ContaCreateView(CreateView):

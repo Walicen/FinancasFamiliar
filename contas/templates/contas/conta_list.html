@@ -1,26 +1,94 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<p><a class="btn btn-default" href="{% url 'contas_conta_list' %}">Conta Listing</a></p>
-<table class="table">
-<tr>
-<td>ID</td><td>Link</td>
-    <td>nome</td>
-    <td>data_inclusao</td>
-    <td>data_alteracao</td>
-    <td>tipo_conta</td>
-    <td>saldo_conta</td>
-</tr>
-{% for object in object_list %}
-<tr>
-    <td>{{object.pk}}</td>
-    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
-    <td>{{ object.nome }}</td>
-    <td>{{ object.data_inclusao }}</td>
-    <td>{{ object.data_alteracao }}</td>
-    <td>{{ object.tipo_conta }}</td>
-    <td>{{ object.saldo_conta }}</td>
-</tr>
-{% endfor %}
-</table><a class="btn btn-primary" href="{% url 'contas_conta_create' %}">Create new Conta</a>
+
+<div class="row">
+    <div class="col-xl-12 mb-12 mb-xl-12">
+        <div class="card shadow">
+            <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0">Contas</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Saldo</th>
+                        <th scope="col">Tipo Conta</th>
+                    </tr>
+
+                    {% for conta in contas %}
+
+                    <tr>
+                        <td>
+                            <a href="{{ contaget_absolute_url }}">
+                               <i class="fas fa-search-dollar"></i>
+                            </a>
+                             <a href="#">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                        <td>{{ conta.nome }}</td>
+                        <td>{{ conta.saldo_conta }}</td>
+                        <td>{% if conta.tipo_conta == 'CC' %}
+                                Conta Corrente
+                            {% elif conta.tipo_conta == 'PO' %}
+                                Poupança
+                            {% else %}
+                                Carteira
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                {% if is_paginated %}
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      {% if page_obj.has_previous %}
+                      <a class="page-link" href="/conta?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <i class="fa fa-angle-left"></i>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                       {% endif %}
+                    </li>
+                     {% for i in page_obj.paginator.page_range %}
+                        {% if jogos.number == i %}
+                            <li class="page-item active">
+                                <a class="page-link" href="#!">
+                                    {{ i }} <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                     <li class="page-item">
+                    {% if page_obj.has_next %}
+                      <a class="page-link" href="/conta?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <i class="fa fa-angle-right"></i>
+                        <span class="sr-only">Next</span>
+                      </a>
+                       {% endif %}
+                    </li>
+                  </ul>
+                </nav>
+            {% endif %}
+
+
+            </div>
+            <a class="btn btn-primary" href="{% url 'contas_conta_create' %}">Nova Conta</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
+

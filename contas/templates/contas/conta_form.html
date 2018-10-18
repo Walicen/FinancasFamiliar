@@ -8,6 +8,7 @@
             <h5 class="card-title">Nova Conta</h5>
             <form method="post">
             {% csrf_token %}
+            <div class="row">
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -16,29 +17,37 @@
                     </div>
                  </div>
 
-                 <div class="col-md-6">
+                <div class="col-md-6">
+                    <div class="form-group">
+                         {{ form.nome.label }}
+                         {{ form.nome }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
                     <div class="form-group">
                         {{ form.usuario.label }}
                         {{ form.usuario }}
                     </div>
-                 </div>
+                </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
                         {{ form.tipo_conta.label }}
                         {{ form.tipo_conta }}
                     </div>
-                 </div>
+                </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                         {{ form.nome.label }}
-                         {{ form.nome }}
-                    </div>
-                 </div>
 
-            <button class="btn btn-primary" type="submit">Salvar</button>
-            <a class="btn btn-default" href="{% url 'contas_conta_list' %}">Gerenciar</a>
+            </div>
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-save"></i>
+                Salvar
+            </button>
+            <a class="btn btn-default" href="{% url 'contas_conta_list' %}">
+                <i class="fas fa-angle-left"></i>
+                Voltar
+            </a>
             </form>
         </div>
     </div>
