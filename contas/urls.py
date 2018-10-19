@@ -29,4 +29,3 @@ urlpatterns += (
     path('conta/detail/<int:pk>/', views.ContaDetailView.as_view(), name='contas_conta_detail'),
     path('conta/update/<int:pk>/', views.ContaUpdateView.as_view(), name='contas_conta_update'),
 )
-

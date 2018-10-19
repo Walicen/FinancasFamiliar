@@ -14,17 +14,15 @@
         <link type="text/css" href="{% static 'assets/css/argon.min.css' %}" rel="stylesheet">
     </head>
     <body>
-
+    <!--
     <header>
         {% include 'header.html' %}
     </header>
-    <br>
-    <div class="container">
+    -->
+
     {% block content %}{% endblock %}
-    </div>
-    <footer>
-        {% include 'footer.html' %}
-    </footer>
+
+
 
     <!-- Core -->
     <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
@@ -33,8 +31,8 @@
 
     <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'assets/js/argon.min.js' %}"></script>
-    <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
-    <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js'%}"></script>
+    <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js' %}"></script>
     <script>
           $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
