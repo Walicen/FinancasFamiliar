@@ -15,6 +15,11 @@ urlpatterns = (
 )
 
 urlpatterns += (
+path('home/', views.Home.as_view(), name='home'),
+)
+
+
+urlpatterns += (
     # urls for Fatura
     path('fatura/', views.FaturaListView.as_view(), name='contas_fatura_list'),
     path('fatura/create/', views.FaturaPagarCreateView.as_view(), name='contas_fatura_create'),

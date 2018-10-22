@@ -7,6 +7,11 @@ from .models import Fatura, Conta
 from .forms import FaturaForm, ContaForm
 
 
+class Home(View):
+    def get(self,  *args, **kwargs):
+        return render(self.request, 'home.html',{})
+
+
 class FaturaListView(ListView):
     model = Fatura
     context_object_name = 'faturas'

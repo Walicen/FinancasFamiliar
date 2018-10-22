@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+     {% if user.is_authenticated %}
+           {% include 'nav-lateral.html' %}
+       {% else %}
+
+       {% endif %}
+    <div class="main-content">
     <div class="row">
         <div class="col-xl-12 mb-12 mb-xl-12">
           <div class="card shadow">
@@ -91,5 +98,6 @@
             </div>
           </div>
         </div>
+    </div>
     </div>
 {% endblock %}

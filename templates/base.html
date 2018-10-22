@@ -20,7 +20,15 @@
     </header>
     -->
 
-    {% block content %}{% endblock %}
+    {% block content %}
+
+       {% if user.is_authenticated %}
+           {% include 'nav-lateral.html' %}
+       {% else %}
+
+       {% endif %}
+
+    {% endblock %}
 
 
 
