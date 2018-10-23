@@ -2,19 +2,21 @@
 {% load static %}
 {% block content %}
 
-     {% if user.is_authenticated %}
-           {% include 'nav-lateral.html' %}
-       {% else %}
+    <div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
+      <div class="container-fluid">
+        <div class="header-body">
 
-       {% endif %}
-    <div class="main-content">
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-xl-12 mb-12 mb-xl-12">
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Faturas</h3>
+                  <h3 class="mb-0 gradient-primary">Faturas</h3>
                 </div>
 
               </div>
@@ -93,11 +95,10 @@
                 </nav>
             {% endif %}
             </div>
-            <div class="mt-3">
-                <a class="btn btn-primary" href="{% url 'contas_fatura_create' %}">Nova Fatura</a>
-            </div>
+
           </div>
         </div>
+    </div>
     </div>
     </div>
 {% endblock %}

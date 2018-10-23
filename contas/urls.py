@@ -1,9 +1,10 @@
+
 from django.urls import path, include
 from rest_framework import routers
 
 from . import api
 from . import views
-
+from allauth.account import views as v
 router = routers.DefaultRouter()
 router.register(r'fatura', api.FaturaViewSet)
 router.register(r'conta', api.ContaViewSet)
@@ -15,9 +16,11 @@ urlpatterns = (
 )
 
 urlpatterns += (
-path('home/', views.Home.as_view(), name='home'),
+    path('home', views.Home.as_view(), name='home'),
+    path('', v.login, name="account_login"),
+   # path('logout', v.logout,{'next_page': '/'}, name='account_logout')
+    path('', views.logout_view , name='logout'),
 )
-
 
 urlpatterns += (
     # urls for Fatura

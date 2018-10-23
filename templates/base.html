@@ -14,22 +14,20 @@
         <link type="text/css" href="{% static 'assets/css/argon.min.css' %}" rel="stylesheet">
     </head>
     <body>
-    <!--
-    <header>
-        {% include 'header.html' %}
-    </header>
-    -->
 
+
+    {% if request.user.is_authenticated%}
+        {% include 'nav-lateral.html' %}
+    {% endif %}
+
+    <div class="main-content">
+        {% if request.user.is_authenticated%}
+                {% include 'nav-bar.html' %}
+        {% endif %}
     {% block content %}
 
-       {% if user.is_authenticated %}
-           {% include 'nav-lateral.html' %}
-       {% else %}
-
-       {% endif %}
-
     {% endblock %}
-
+    </div>
 
 
     <!-- Core -->
