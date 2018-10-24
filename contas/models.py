@@ -84,6 +84,16 @@ class Fatura(models.Model):
         return reverse('contas_fatura_update', args=(self.pk,))
 
 
+class Movimentacao(models.Model):
+    data = models.DateTimeField(auto_now_add=True, editable=False)
+    conta = ForeignKey(Conta, on_delete=models.CASCADE)
+    fatura = ForeignKey(Fatura, on_delete=models.CASCADE)
+    valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    class Meta:
+        db_table = 'movimentacao'
+        ordering = ('-pk',)
+
 def cria_perfil(sender, instance, created, **kwargs):
     if created:
         Perfil.objects.create(user=instance)
