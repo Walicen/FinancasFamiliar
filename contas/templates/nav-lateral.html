@@ -7,7 +7,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./index.html">
+      <a class="navbar-brand pt-0" href="{% url 'home' %}">
         <img src="{% static 'assets/img/segundo.png' %}" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
@@ -81,9 +81,26 @@
               <i class="ni ni-tv-2 text-primary"></i> Home
             </a>
           </li>
+
+         <li class="nav-item ">
+            <div class="accordion" id="accordionExample">
+               <a class="nav-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                     Lançamentos
+               </a>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                     <a class="nav-link" href="{% url 'contas_fatura_list' %}">
+                      <i class="ni ni-planet text-blue"> </i> Listar
+                    </a>
+                </div>
+
+            </div>
+
+         </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'contas_fatura_list' %} }">
-              <i class="ni ni-planet text-blue"> </i> Lançamentos
+            <a class="nav-link" href="{% url 'contas_fatura_list' %}">
+              <i class="ni ni-planet text-blue"> </i> Lançamentos VELHo
             </a>
           </li>
           <li class="nav-item">
