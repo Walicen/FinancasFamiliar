@@ -2,90 +2,105 @@
 {% load static %}
 {% block content %}
 
-<div class="row">
-    <div class="col-xl-12 mb-12 mb-xl-12">
-        <div class="card shadow-2">
-            <div class="card-header border-3">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="mb-0">Contas</h3>
+<div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
+    <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col-xl-12 mb-12 mb-xl-12">
+            <div class="card shadow-2">
+                <div class="card-header border-3">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="mb-0">Contas</h2>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-outline-success" href="{% url 'contas_conta_create' %}">
+                                <i class="fas fa-plus-circle"></i>
+                                Nova Conta
+                            </a>
+                        </div>
+
                     </div>
                 </div>
-            </div>
 
-            <div class="table-responsive">
-                <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
 
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Saldo</th>
-                        <th scope="col">Tipo Conta</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Saldo</th>
+                            <th scope="col">Tipo Conta</th>
+                        </tr>
 
-                    {% for conta in contas %}
+                        {% for conta in contas %}
 
-                    <tr>
-                        <td>
-                            <a href="{{ conta.get_absolute_url }}">
-                               <i class="fas fa-search-dollar"></i>
-                            </a>
-                             <a href="#">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                        <td>{{ conta.nome }}</td>
-                        <td>{{ conta.saldo_conta }}</td>
-                        <td>{% if conta.tipo_conta == 'CC' %}
-                                Conta Corrente
-                            {% elif conta.tipo_conta == 'PO' %}
-                                Poupança
-                            {% else %}
-                                Carteira
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-
-                {% if is_paginated %}
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                      {% if page_obj.has_previous %}
-                      <a class="page-link" href="/conta?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                        <i class="fa fa-angle-left"></i>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                       {% endif %}
-                    </li>
-                     {% for i in page_obj.paginator.page_range %}
-                        {% if jogos.number == i %}
-                            <li class="page-item active">
-                                <a class="page-link" href="#!">
-                                    {{ i }} <span class="sr-only">(current)</span>
+                        <tr>
+                            <td>
+                                <a href="{{ conta.get_absolute_url }}">
+                                   <i class="fas fa-search-dollar"></i>
                                 </a>
-                            </li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                     <li class="page-item">
-                    {% if page_obj.has_next %}
-                      <a class="page-link" href="/conta?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <i class="fa fa-angle-right"></i>
-                        <span class="sr-only">Next</span>
-                      </a>
-                       {% endif %}
-                    </li>
-                  </ul>
-                </nav>
-            {% endif %}
+                                 <a href="#">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                            <td>{{ conta.nome }}</td>
+                            <td>{{ conta.saldo_conta }}</td>
+                            <td>{% if conta.tipo_conta == 'CC' %}
+                                    Conta Corrente
+                                {% elif conta.tipo_conta == 'PO' %}
+                                    Poupança
+                                {% else %}
+                                    Carteira
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
 
+                    {% if is_paginated %}
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                          {% if page_obj.has_previous %}
+                          <a class="page-link" href="/conta?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <i class="fa fa-angle-left"></i>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                           {% endif %}
+                        </li>
+                         {% for i in page_obj.paginator.page_range %}
+                            {% if jogos.number == i %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="#!">
+                                        {{ i }} <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                         <li class="page-item">
+                        {% if page_obj.has_next %}
+                          <a class="page-link" href="/conta?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <i class="fa fa-angle-right"></i>
+                            <span class="sr-only">Next</span>
+                          </a>
+                           {% endif %}
+                        </li>
+                      </ul>
+                    </nav>
+                {% endif %}
+
+                </div>
 
             </div>
-            <a class="btn btn-primary" href="{% url 'contas_conta_create' %}">Nova Conta</a>
         </div>
     </div>
 </div>

@@ -6,10 +6,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models as models
 
 TIPO_FATURA = (
-    ('P', 'Pagar'),
-    ('R', 'Receber'),
+    ('E', 'Entrada'),
+    ('S', 'Saída'),
 )
-
 
 TIPO_CONTA = (
     ('CC', 'Conta Corrente'),

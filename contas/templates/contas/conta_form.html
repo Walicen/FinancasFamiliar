@@ -3,9 +3,32 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Nova Conta</h5>
+<div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
+    <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+    </div>
+</div>
+
+    <div class="container-fluid mt--7">
+    <div class="row">
+         <div class="col-xl-12 mb-12 mb-xl-12">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="mb-0 gradient-primary">
+                      {% if form.id is not None %}
+                          Editar Conta
+                      {% endif %}
+                      Nova Conta
+
+                  </h2>
+                </div>
+              </div>
+            </div>
+              <div class="container-fluid ">
             <form method="post">
             {% csrf_token %}
             <div class="row">
@@ -40,15 +63,18 @@
 
 
             </div>
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-outline-success" type="submit">
                 <i class="fas fa-save"></i>
                 Salvar
             </button>
-            <a class="btn btn-default" href="{% url 'contas_conta_list' %}">
+            <a class="btn btn-outline-default" href="{% url 'contas_conta_list' %}">
                 <i class="fas fa-angle-left"></i>
                 Voltar
             </a>
+                 <br></br>
             </form>
+
+              </div>
         </div>
     </div>
 {% endblock %}
