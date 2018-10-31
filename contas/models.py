@@ -5,6 +5,16 @@ from django.db.models import *
 from django.contrib.contenttypes.models import ContentType
 from django.db import models as models
 
+CATEGORIA = (
+    ('1', 'Educação',),
+    ('2', 'Alimentação',),
+    ('3', 'Combustível'),
+    ('4', 'Lazer'),
+    ('5', 'Sálario'),
+    ('6', 'Outros')
+)
+
+
 TIPO_FATURA = (
     ('E', 'Entrada'),
     ('S', 'Saída'),
@@ -66,6 +76,8 @@ class Fatura(models.Model):
     juro = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     status = models.CharField(max_length=1, choices=STATUS, null=True)
+    categoria = models.CharField(max_length=1, choices=CATEGORIA, null=True, blank=True)
+
     # relacionamento
     conta = ForeignKey(Conta, on_delete=models.CASCADE, null=True)
 

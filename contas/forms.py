@@ -25,6 +25,9 @@ class FaturaForm(forms.ModelForm):
             'valor_fatura': TextInput(attrs={
                 'class': 'money form-control form-control-alternative',
                 'placeholder': 'Valor'}),
+            'categoria': Select(attrs={'class': 'form-control form-control-alternative',
+                                         'placeholder': 'Categoria',
+                                         }),
         }
         localized_fields = {'valor_fatura'}
 

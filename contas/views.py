@@ -17,6 +17,11 @@ class Home(View):
     def get(self,  *args, **kwargs):
         return render(self.request, 'home.html',{})
 
+class FaturaQuitar():
+
+    def get(self, *args, **kwargs):
+        pass
+
 
 class FaturaListView(ListView):
     model = Fatura
