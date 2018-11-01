@@ -29,7 +29,7 @@ urlpatterns += (
     path('fatura/detail/<int:pk>/', views.FaturaDetailView.as_view(), name='contas_fatura_detail'),
     path('fatura/update/<int:pk>/', views.FaturaUpdateView.as_view(), name='contas_fatura_update'),
 
-    path('fatura/quitar/<int:pk>', views.FaturaQuitar.as_view, name='fatura_quitar')
+
 )
 
 urlpatterns += (

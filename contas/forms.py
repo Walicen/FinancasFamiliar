@@ -3,7 +3,24 @@ from django.contrib.auth.models import User
 from django.forms import Textarea, TextInput, DateInput, NumberInput, Select
 from input_mask.fields import DecimalField
 
-from .models import Fatura, Conta
+from .models import Fatura, Conta, Movimentacao
+
+
+class MovimetacaoForm(forms.ModelForm):
+    class Meta:
+        model = Movimentacao
+        fields = '__all__'
+        exclude = {'data', 'fatura'}
+        widgets = {
+
+            'valor': TextInput(attrs={
+                'class': 'money form-control form-control-alternative',
+                'placeholder': 'Valor'}),
+
+            'conta': Select(attrs={
+                'class': 'form-control form-control-alternative',
+                'placeholder': 'Conta'}),
+        }
 
 class FaturaForm(forms.ModelForm):
     class Meta:

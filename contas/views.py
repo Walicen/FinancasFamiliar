@@ -37,7 +37,7 @@ class FaturaPagarCreateView(CreateView):
 
 class FaturaDetailView(DetailView):
     model = Fatura
-
+    context_object_name = 'fatura'
 
 class FaturaUpdateView(UpdateView):
     model = Fatura
