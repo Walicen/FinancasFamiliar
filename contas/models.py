@@ -8,16 +8,20 @@ from django.db import models as models
 CATEGORIA = (
     ('1', 'Educação',),
     ('2', 'Alimentação',),
-    ('3', 'Combustível'),
+    ('3', 'Automóvel'),
     ('4', 'Lazer'),
     ('5', 'Sálario'),
-    ('6', 'Outros')
+    ('6', 'Impostos'),
+    ('7', 'Farmácia'),
+    ('8', 'Moradia'),
+    ('9', 'Vestuário'),
+    ('10', 'Outros')
 )
 
 
 TIPO_FATURA = (
-    ('E', 'Entrada'),
-    ('S', 'Saída'),
+    ('R', 'RECEITA'),
+    ('D', 'DESPESA'),
 )
 
 TIPO_CONTA = (
@@ -31,6 +35,7 @@ STATUS = (
     ('PG', 'Paga'),
     ('VE', 'Vencida'),
 )
+
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
@@ -69,7 +74,7 @@ class Fatura(models.Model):
     data_alteracao = models.DateTimeField(auto_now=True, editable=False)
     data_vencimento = models.DateTimeField(null=False)
     data_pagamento = models.DateTimeField(null=True)
-    tipo_fatura = models.CharField(max_length=1, choices=TIPO_FATURA)
+    tipo_fatura = models.CharField(max_length=2, choices=TIPO_FATURA)
     valor_fatura = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     valor_pago = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     desconto = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)

@@ -6,7 +6,7 @@ from input_mask.fields import DecimalField
 from .models import Fatura, Conta, Movimentacao
 
 
-class MovimetacaoForm(forms.ModelForm):
+class MovimentacaoForm(forms.ModelForm):
     class Meta:
         model = Movimentacao
         fields = '__all__'
@@ -21,6 +21,8 @@ class MovimetacaoForm(forms.ModelForm):
                 'class': 'form-control form-control-alternative',
                 'placeholder': 'Conta'}),
         }
+
+        localized_fields = {'valor'}
 
 class FaturaForm(forms.ModelForm):
     class Meta:
@@ -51,7 +53,7 @@ class FaturaForm(forms.ModelForm):
         labels = {
             'Descricao': 'Descrição',
             'data_vencimento': 'Data Vencimento',
-            'tipo_fatura': 'Pagar / Receber',
+            'tipo_fatura': 'Receitas / Despesas',
             'valor_fatura': 'Valor'
         }
         '''

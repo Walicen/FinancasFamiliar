@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import Fatura, Conta
-from .forms import FaturaForm, ContaForm
+from .models import Fatura, Conta, Movimentacao
+from .forms import FaturaForm, ContaForm, MovimentacaoForm
 
 
 def logout_view(request):
@@ -35,9 +35,42 @@ class FaturaPagarCreateView(CreateView):
     success_url = reverse_lazy('contas_fatura_list')
 
 
-class FaturaDetailView(DetailView):
-    model = Fatura
-    context_object_name = 'fatura'
+class MovimentacaoView(View):
+
+    def post(self, request, fatura):
+
+        fatura= Fatura.objects.get(pk=fatura)
+
+        conta = Conta.objects.get(pk=request.POST['conta'])
+
+        movimentacao = Movimentacao.objects.create(
+            fatura=fatura,
+            valor=float(request.POST['valor']),
+            conta=conta
+        )
+
+        data = {
+            'fatura': fatura,
+            'form': MovimentacaoForm(),
+            'lista': movimentacao.fatura.movimentacao_set.all()
+        }
+
+        return render(request, 'contas/fatura_detail.html', data)
+
+
+class FaturaDetailView(View):
+
+    def get(self, request, pk):
+        data = {
+            'fatura': Fatura.objects.get(pk=pk),
+            'form': MovimentacaoForm()
+        }
+        return render(request, 'contas/fatura_detail.html', data)
+
+    def post(self, request, pk):
+        pass
+
+
 
 class FaturaUpdateView(UpdateView):
     model = Fatura

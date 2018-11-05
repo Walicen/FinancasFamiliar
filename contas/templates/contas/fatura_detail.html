@@ -19,29 +19,21 @@
                   <h2 class="mb-0 gradient-primary">Quitar Lançamento </h2>
                 </div>
               </div>
-            </div>
+                lancamento {{ fatura.descricao }} --- VAloR : {{ fatura.valor_fatura }}
+              <form action="{% url 'movimentacao' fatura.id %}" method="post">
+                  {% csrf_token %}
+                  {{ form.valor }}<br>{{ form.conta }}
+                  <button type="submit">Add</button>
+              </form>
 
+                {% for item in lista %}
+                    {{ item.valor }}
+                {% endfor %}
+
+            </div>
           </div>
         </div>
     </div>
     </div>
-
-
-
-
-<p><a class="btn btn-default" href="{% url 'contas_fatura_list' %}">Fatura Listing</a></p>
-<table class="table">
-<tr><td>Descricao</td><td>{{ object.Descricao }}</td></tr>
-<tr><td>data_inclusao</td><td>{{ object.data_inclusao }}</td></tr>
-<tr><td>data_alteracao</td><td>{{ object.data_alteracao }}</td></tr>
-<tr><td>data_vencimento</td><td>{{ object.data_vencimento }}</td></tr>
-<tr><td>data_pagamento</td><td>{{ object.data_pagamento }}</td></tr>
-<tr><td>tipo_fatura</td><td>{{ object.tipo_fatura }}</td></tr>
-<tr><td>valor_fatura</td><td>{{ object.valor_fatura }}</td></tr>
-<tr><td>valor_pago</td><td>{{ object.valor_pago }}</td></tr>
-<tr><td>desconto</td><td>{{ object.desconto }}</td></tr>
-<tr><td>juro</td><td>{{ object.juro }}</td></tr>
-</table>
-<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Fatura</a>
 
 {% endblock %}
