@@ -31,9 +31,9 @@ TIPO_CONTA = (
 )
 
 STATUS = (
-    ('PE', 'Pendente'),
-    ('PG', 'Paga'),
-    ('VE', 'Vencida'),
+    ('1', 'Pendente'),
+    ('2', 'Paga'),
+    ('3', 'Vencida'),
 )
 
 
@@ -59,6 +59,9 @@ class Conta(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.pk
+
+    def __str__(self):
+        return self.nome
 
     def get_absolute_url(self):
         return reverse('contas_conta_detail', args=(self.pk,))
@@ -109,6 +112,9 @@ class Movimentacao(models.Model):
     class Meta:
         db_table = 'movimentacao'
         ordering = ('-pk',)
+
+
+
 
 def cria_perfil(sender, instance, created, **kwargs):
     if created:

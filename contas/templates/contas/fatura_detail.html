@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 
     <div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
@@ -19,10 +20,13 @@
                   <h2 class="mb-0 gradient-primary">Quitar Lançamento </h2>
                 </div>
               </div>
-                lancamento {{ fatura.descricao }} --- VAloR : {{ fatura.valor_fatura }}
+                Lançamento {{ fatura.descricao }}<br>
+                Valor : {{ fatura.valor_fatura }}<br>
+                Valor pago: {{ fatura.valor_pago }}
+
               <form action="{% url 'movimentacao' fatura.id %}" method="post">
                   {% csrf_token %}
-                  {{ form.valor }}<br>{{ form.conta }}
+                  {{ form|crispy}}
                   <button type="submit">Add</button>
               </form>
 

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import Fatura, Conta, Movimentacao
+from .models import Fatura, Conta, Movimentacao, STATUS
 from .forms import FaturaForm, ContaForm, MovimentacaoForm
 
 
@@ -38,18 +38,37 @@ class FaturaPagarCreateView(CreateView):
 class MovimentacaoView(View):
 
     def post(self, request, fatura):
+        mensagem = False
+        fatura = Fatura.objects.get(pk=fatura)
+        form = MovimentacaoForm(request.POST)
 
-        fatura= Fatura.objects.get(pk=fatura)
+        if form.is_valid():
+            conta = form.cleaned_data['conta']
+            valor = form.cleaned_data['valor']
+            if fatura.valor_pago <= valor:
+                movimentacao = Movimentacao.objects.create(
+                    fatura=fatura,
+                    valor=valor,
+                    conta=conta
+                )
+                # atualizando fatura
+                fatura.valor_pago += valor
+                if fatura.valor_pago == fatura.valor_fatura:
+                    fatura.status = '3'
+                fatura.save()
+                # atualizando conta
+                if fatura.tipo_fatura == 'R':
+                    conta.saldo_conta += valor
+                else:
+                    conta.saldo_conta -= valor
 
-        conta = Conta.objects.get(pk=request.POST['conta'])
+                conta.save()
+            else:
+                mensagem = True
 
-        movimentacao = Movimentacao.objects.create(
-            fatura=fatura,
-            valor=float(request.POST['valor']),
-            conta=conta
-        )
 
         data = {
+            'mensagem': mensagem,
             'fatura': fatura,
             'form': MovimentacaoForm(),
             'lista': movimentacao.fatura.movimentacao_set.all()
