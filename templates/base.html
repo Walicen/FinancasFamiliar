@@ -15,7 +15,6 @@
     </head>
     <body>
 
-
     {% if request.user.is_authenticated%}
         {% include 'nav-lateral.html' %}
     {% endif %}
@@ -29,19 +28,17 @@
     {% endblock %}
     </div>
 
-
     <!-- Core -->
     <script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery.mask.min.js' %}"></script>
     <script src="{% static 'assets/js/meuJs.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'assets/vendor/chart.js/dist/Chart.min.js' %}"></script>
     <script src="{% static 'assets/vendor/chart.js/dist/Chart.extension.js' %}"></script>
-    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/chart.js/dist/Chart.bundle.min.js' %}"></script>
     <script src="{% static 'assets/js/argon.min.js' %}"></script>
     <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
     <script src="{% static 'assets/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js' %}"></script>
-
-
 
     <script>
           $('.datepicker').datepicker({
