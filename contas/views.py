@@ -15,7 +15,7 @@ def logout_view(request):
 
 class Home(View):
     def get(self,  *args, **kwargs):
-        return render(self.request, 'home.html',{})
+        return render(self.request, 'home.html',{'contas': Conta.objects.all()})
 
 class FaturaQuitar():
 
@@ -38,40 +38,48 @@ class FaturaPagarCreateView(CreateView):
 class MovimentacaoView(View):
 
     def post(self, request, fatura):
-        mensagem = False
+        texto_erro = ''
+        texto_mensagem = ''
         fatura = Fatura.objects.get(pk=fatura)
         form = MovimentacaoForm(request.POST)
 
         if form.is_valid():
             conta = form.cleaned_data['conta']
             valor = form.cleaned_data['valor']
-            if fatura.valor_pago <= valor:
-                movimentacao = Movimentacao.objects.create(
-                    fatura=fatura,
-                    valor=valor,
-                    conta=conta
-                )
-                # atualizando fatura
-                fatura.valor_pago += valor
-                if fatura.valor_pago == fatura.valor_fatura:
-                    fatura.status = '3'
-                fatura.save()
-                # atualizando conta
-                if fatura.tipo_fatura == 'R':
-                    conta.saldo_conta += valor
-                else:
-                    conta.saldo_conta -= valor
 
-                conta.save()
+            if valor > 0:
+                if fatura.valor_fatura >= fatura.valor_pago + valor:
+                    movimentacao = Movimentacao.objects.create(
+                        fatura=fatura,
+                        valor=valor,
+                        conta=conta
+                    )
+                    # atualizando fatura
+                    fatura.valor_pago += valor
+                    if fatura.valor_pago == fatura.valor_fatura:
+                        fatura.status = '3'
+                        texto_mensagem = 'Lançamento quitado com sucesso'
+
+                    fatura.save()
+                    # atualizando conta
+                    if fatura.tipo_fatura == 'R':
+                        conta.saldo_conta += valor
+                    else:
+                        conta.saldo_conta -= valor
+
+                    conta.save()
+                else:
+                    texto_mensagem = 'Valor do lançamento maior que o valor da fatura!'
             else:
-                mensagem = True
+                texto_mensagem = 'Valor da movimentação deve ser maior que zero!'
 
 
         data = {
-            'mensagem': mensagem,
+            'texto_mensagem': texto_mensagem,
+            'texto_erro': texto_erro,
             'fatura': fatura,
             'form': MovimentacaoForm(),
-            'lista': movimentacao.fatura.movimentacao_set.all()
+            'lista': fatura.movimentacoes.all()
         }
 
         return render(request, 'contas/fatura_detail.html', data)
@@ -80,9 +88,12 @@ class MovimentacaoView(View):
 class FaturaDetailView(View):
 
     def get(self, request, pk):
+        fatura = Fatura.objects.get(pk=pk)
+        movimentacoes = Movimentacao.objects.filter(fatura=fatura.pk)
         data = {
-            'fatura': Fatura.objects.get(pk=pk),
-            'form': MovimentacaoForm()
+            'fatura': fatura,
+            'form': MovimentacaoForm(),
+            'lista': movimentacoes
         }
         return render(request, 'contas/fatura_detail.html', data)
 

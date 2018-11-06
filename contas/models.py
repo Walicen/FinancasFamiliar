@@ -105,8 +105,8 @@ class Fatura(models.Model):
 
 class Movimentacao(models.Model):
     data = models.DateTimeField(auto_now_add=True, editable=False)
-    conta = ForeignKey(Conta, on_delete=models.CASCADE)
-    fatura = ForeignKey(Fatura, on_delete=models.CASCADE)
+    conta = ForeignKey(Conta, on_delete=models.CASCADE, related_name='movimentacoes_conta')
+    fatura = ForeignKey(Fatura, on_delete=models.CASCADE, related_name='movimentacoes')
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     class Meta:

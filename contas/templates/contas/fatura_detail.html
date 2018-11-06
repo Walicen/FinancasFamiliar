@@ -17,23 +17,45 @@
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h2 class="mb-0 gradient-primary">Quitar Lançamento </h2>
+                  <h2 class="mb-0 gradient-primary">Quitar Lançamento</h2>
                 </div>
               </div>
-                Lançamento {{ fatura.descricao }}<br>
-                Valor : {{ fatura.valor_fatura }}<br>
-                Valor pago: {{ fatura.valor_pago }}
+
+              {% if texto_mensagem  %}
+              <div class="alert alert-success" role="alert">
+                <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
+                <span class="alert-inner--text">{{ texto_mensagem }}</span>
+              </div>
+              {% endif %}
+
+              {% if texto_erro  %}
+              <div class="alert alert-danger" role="alert">
+                <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
+                <span class="alert-inner--text">{{ texto_erro }}</span>
+              </div>
+              {% endif %}
+
+              Lançamento {{ fatura.descricao }}<br>
+              Valor : {{ fatura.valor_fatura }}<br>
+              Valor pago: {{ fatura.valor_pago }}
 
               <form action="{% url 'movimentacao' fatura.id %}" method="post">
                   {% csrf_token %}
                   {{ form|crispy}}
-                  <button type="submit">Add</button>
+                  <button class="btn btn-outline-success" type="submit">Enviar</button>
+
+                  <a class="btn btn-outline-default" href="{% url 'contas_fatura_list' %}">
+                      <i class="fas fa-angle-left"></i>
+                      Voltar
+                  </a>
+
               </form>
 
+              {% if lista %}
                 {% for item in lista %}
                     {{ item.valor }}
                 {% endfor %}
-
+              {% endif %}
             </div>
           </div>
         </div>
