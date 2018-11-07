@@ -5,7 +5,6 @@ from input_mask.fields import DecimalField
 
 from .models import Fatura, Conta, Movimentacao
 
-
 class MovimentacaoForm(forms.ModelForm):
     class Meta:
         model = Movimentacao
