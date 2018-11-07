@@ -17,6 +17,7 @@ urlpatterns = (
 
 urlpatterns += (
     path('home', views.Home.as_view(), name='home'),
+    path('perfil/<int:pk>/', views.PerfilViewDetail.as_view(), name='perfil'),
     path('', v.login, name="account_login"),
    # path('logout', v.logout,{'next_page': '/'}, name='account_logout')
     path('', views.logout_view , name='logout'),

@@ -1,6 +1,5 @@
 import datetime
 
-
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
@@ -8,16 +7,23 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import Fatura, Conta, Movimentacao, STATUS
-from .forms import FaturaForm, ContaForm, MovimentacaoForm
+from .models import Fatura, Conta, Movimentacao, STATUS, Perfil
+from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm
 
 
 def logout_view(request):
     logout_then_login(request,'')
 
+
+class PerfilViewDetail(LoginRequiredMixin, DetailView):
+    login_url = '/'
+    model = Perfil
+    form_class = PerfilForm
+    template_name = 'perfil.html'
+
+
 class Home(LoginRequiredMixin, View):
     login_url = '/'
-
     data = {
         'contas': Conta.objects.all(),
         'labels_grafico': "[\"Diego\",\"Denzer\"]",
@@ -27,11 +33,6 @@ class Home(LoginRequiredMixin, View):
 
     def get(self,  *args, **kwargs):
         return render(self.request, 'home.html', self.data)
-
-class FaturaQuitar():
-
-    def get(self, *args, **kwargs):
-        pass
 
 
 class FaturaListView(LoginRequiredMixin, ListView):

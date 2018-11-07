@@ -42,6 +42,7 @@ class Perfil(models.Model):
     cor = models.CharField(max_length=7)
 
 
+
 class Conta(models.Model):
     ''' Modelo para Contas '''
     nome = models.CharField(max_length=255)
