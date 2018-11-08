@@ -32,7 +32,7 @@ class Home(LoginRequiredMixin, View):
     }
 
     def get(self,  *args, **kwargs):
-        return render(self.request, 'home.html', {'contas': Conta.objects.all()})
+        return render(self.request, 'home.html', {'contas': Conta.objects.all()} )
 
 
 class FaturaListView(LoginRequiredMixin, ListView):
