@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
@@ -9,7 +8,6 @@ from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 from .models import Fatura, Conta, Movimentacao, STATUS, Perfil
 from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm
-
 
 def logout_view(request):
     logout_then_login(request,'')

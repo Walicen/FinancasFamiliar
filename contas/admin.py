@@ -30,7 +30,7 @@ class ContaAdminForm(forms.ModelForm):
 class ContaAdmin(admin.ModelAdmin):
     form = ContaAdminForm
     list_display = ['nome', 'data_inclusao', 'data_alteracao', 'tipo_conta', 'saldo_conta']
-    
+
 
 admin.site.register(Conta, ContaAdmin)
 
