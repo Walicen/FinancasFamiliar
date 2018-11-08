@@ -85,7 +85,7 @@ class Fatura(models.Model):
     juro = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     status = models.CharField(max_length=1, choices=STATUS, null=True)
-    categoria = models.CharField(max_length=1, choices=CATEGORIA, null=True, blank=True)
+    categoria = models.CharField(max_length=2, choices=CATEGORIA, null=True, blank=True)
 
     # relacionamento
     conta = ForeignKey(Conta, on_delete=models.CASCADE, null=True)
