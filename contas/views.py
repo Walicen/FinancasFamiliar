@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import Fatura, Conta, Movimentacao, STATUS, Perfil
+from .models import Fatura, Conta, Movimentacao, STATUS, Perfil, Sum
 from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm
 
 def logout_view(request):
@@ -22,14 +22,21 @@ class PerfilViewDetail(LoginRequiredMixin, DetailView):
 
 class Home(LoginRequiredMixin, View):
     login_url = '/'
-    data = {
-        'contas': Conta.objects.all(),
-        'labels_grafico': "[\"Diego\",\"Denzer\"]",
-        'valores': [1, 2, 1, 30, 15, 40, 2, 6, 0],
-        'valores2': [10, 20, 1, 30, 15, 40, 2, 6, 0]
-    }
 
     def get(self,  *args, **kwargs):
+        mes = datetime.datetime.month
+        ano = datetime.datetime.year
+        inicio_mes= datetime.strptime(f'01/{mes}/2018 00:00', '% d/%m/%Y% H:%M')
+        fim_mes = datetime.strptime(f'31/{mes}/2018 23:59', '% d/%m/%Y% H:%M')
+
+
+        data = {
+            'receitas_mes_previstas': Fatura.objects.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R').aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
+            'contas': Conta.objects.all(),
+            'labels_grafico': "[\"Diego\",\"Denzer\"]",
+            'valores': [1, 2, 1, 30, 15, 40, 2, 6, 0],
+            'valores2': [10, 20, 1, 30, 15, 40, 2, 6, 0]
+        }
         return render(self.request, 'home.html', {'contas': Conta.objects.all()} )
 
 
