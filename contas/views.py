@@ -31,7 +31,16 @@ class Home(LoginRequiredMixin, View):
 
 
         data = {
-            'receitas_mes_previstas': Fatura.objects.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R').aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
+            'receitas_mes_previstas': Fatura.objects.filter(data_vencimento__gte=inicio_mes,
+                                                            data_vencimento__lte=fim_mes,
+                                                            tipo_fatura='R')
+                                                    .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
+
+            'receitas_mes_realizadas': Fatura.objects.filter(data_vencimento__gte=inicio_mes,
+                                                             data_vencimento__lte=fim_mes,
+                                                             tipo_fatura='R',
+                                                             status='2')
+                                                     .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
             'contas': Conta.objects.all(),
             'labels_grafico': "[\"Diego\",\"Denzer\"]",
             'valores': [1, 2, 1, 30, 15, 40, 2, 6, 0],
