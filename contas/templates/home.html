@@ -50,8 +50,8 @@
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
-                  <h6 class="text-uppercase text-light ls-1 mb-1">teste</h6>
-                  <h2 class="text-white mb-0">teste</h2>
+                  <h6 class="text-uppercase text-light ls-1 mb-1">Mês corrente</h6>
+                  <h2 class="text-white mb-0">Mês corrente</h2>
                 </div>
               </div>
             </div>
@@ -70,25 +70,18 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ["Receita Prevista", "Receita Realizada"],
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: [{{ receitas_mes_previstas }},{{ receitas_mes_realizadas }}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(54, 162, 235, 0.2)'
+
                     ],
                     borderColor: [
                         'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(54, 162, 235, 1)'
                     ],
                     borderWidth: 1
                 }]
