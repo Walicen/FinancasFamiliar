@@ -25,8 +25,10 @@ class Home(LoginRequiredMixin, View):
 
     def get(self,  *args, **kwargs):
         data_atual = datetime.date.today()
-        inicio_mes = datetime.datetime.strptime(f'01/{data_atual.month}/{data_atual.year} 00:00', '%d/%m/%Y %H:%M')
-        fim_mes = datetime.datetime.strptime(f'30/{data_atual.month}/{data_atual.year} 23:59', '%d/%m/%Y %H:%M')
+        inicio = f'01/{data_atual.month}/{data_atual.year} 00:00'
+        fim = f'30/{data_atual.month}/{data_atual.year} 23:59'
+        inicio_mes = datetime.datetime.strptime(inicio, '%d/%m/%Y %H:%M')
+        fim_mes = datetime.datetime.strptime(fim, '%d/%m/%Y %H:%M')
 
         data = {
             'receitas_mes_previstas': Fatura.objects.filter(data_vencimento__gte=inicio_mes,
