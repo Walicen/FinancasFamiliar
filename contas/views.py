@@ -25,8 +25,8 @@ class Home(LoginRequiredMixin, View):
 
     def get(self,  *args, **kwargs):
         data_atual = datetime.date.today()
-        inicio = f'01/{data_atual.month}/{data_atual.year} 00:00'
-        fim = f'30/{data_atual.month}/{data_atual.year} 23:59'
+        inicio = '01/{}/{} 00:00'.format(data_atual.month, data_atual.year)
+        fim = '30/{}/{} 23:59'.format(data_atual.month, data_atual.year)
         inicio_mes = datetime.datetime.strptime(inicio, '%d/%m/%Y %H:%M')
         fim_mes = datetime.datetime.strptime(fim, '%d/%m/%Y %H:%M')
 
