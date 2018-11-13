@@ -5,6 +5,8 @@ from django.db.models import *
 from django.contrib.contenttypes.models import ContentType
 from django.db import models as models
 
+from contas.manager import FaturaManager
+
 CATEGORIA = (
     ('1', 'Educação',),
     ('2', 'Alimentação',),
@@ -86,6 +88,8 @@ class Fatura(models.Model):
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
     status = models.CharField(max_length=1, choices=STATUS, null=True)
     categoria = models.CharField(max_length=2, choices=CATEGORIA, null=True, blank=True)
+
+    objects = FaturaManager()
 
     # relacionamento
     conta = ForeignKey(Conta, on_delete=models.CASCADE, null=True)

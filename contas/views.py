@@ -1,4 +1,8 @@
 import datetime
+import json
+import stat
+
+from builtins import round
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
@@ -24,29 +28,12 @@ class Home(LoginRequiredMixin, View):
     login_url = '/'
 
     def get(self,  *args, **kwargs):
-        data_atual = datetime.date.today()
-        inicio = '01/{}/{} 00:00'.format(data_atual.month, data_atual.year)
-        fim = '30/{}/{} 23:59'.format(data_atual.month, data_atual.year)
-        inicio_mes = datetime.datetime.strptime(inicio, '%d/%m/%Y %H:%M')
-        fim_mes = datetime.datetime.strptime(fim, '%d/%m/%Y %H:%M')
 
-        data = {
-            'receitas_mes_previstas': Fatura.objects.filter(data_vencimento__gte=inicio_mes,
-                                                            data_vencimento__lte=fim_mes,
-                                                            tipo_fatura='R')
-                                                    .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
+        data = Fatura.objects.dashboard()
+        data['contas'] = Conta.objects.all(),
+        data['atrasadas'] = Fatura.objects.filter(data_vencimento__lt=datetime.date.today(), status__isnull=True, tipo_fatura='D')
 
-            'receitas_mes_realizadas': Fatura.objects.filter(data_vencimento__gte=inicio_mes,
-                                                             data_vencimento__lte=fim_mes,
-                                                             tipo_fatura='R',
-                                                             status='2')
-                                                     .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
-            'contas': Conta.objects.all(),
-            'labels_grafico': "[\"Diego\",\"Denzer\"]",
-            'valores': [1, 2, 1, 30, 15, 40, 2, 6, 0],
-            'valores2': [10, 20, 1, 30, 15, 40, 2, 6, 0]
-        }
-        return render(self.request, 'home.html', {'contas': Conta.objects.all()} )
+        return render(self.request, 'home.html', data)
 
 
 class FaturaListView(LoginRequiredMixin, ListView):

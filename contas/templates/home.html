@@ -8,6 +8,7 @@
       <div class="container-fluid">
         <div class="header-body">
             <div class="row">
+
                 {% for conta in contas %}
                 <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
@@ -64,16 +65,19 @@
       </div>
     </div>
   </div>
-    {{ receitas_mes_previstas }} - {{ receitas_mes_realizadas }}
+
     <script>
+        var names = JSON.parse('{{ labels|safe }}');
+        var valores = JSON.parse('{{ valores|safe }}');
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Receita Prevista", "Receita Realizada"],
+                labels: names,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [{{ receitas_mes_previstas }},{{ receitas_mes_realizadas }}],
+                    label: 'Receitas',
+
+                    data: valores,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -88,6 +92,7 @@
             },
             options: {
                 scales: {
+
                     yAxes: [{
                         ticks: {
                             beginAtZero:true
