@@ -1,9 +1,5 @@
 import datetime
-import json
-import stat
 
-from builtins import round
-from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render, redirect
@@ -91,7 +87,7 @@ class MovimentacaoView(LoginRequiredMixin, View):
                         # atualizando fatura
                         fatura.valor_pago += valor
                         if fatura.valor_pago == fatura.valor_fatura:
-                            fatura.status = '3'
+                            fatura.status = '2'
                             texto_mensagem = 'Lançamento quitado com sucesso'
                         fatura.save()
                         # atualizando conta

@@ -1,25 +1,33 @@
-import json
-from datetime import datetime
+import simplejson as json
+from  datetime import *
 from django.db import models
 from django.db.models import Sum, Min, Max
+
+
 
 class FaturaManager(models.Manager):
 
     def dashboard(self):
-        data_atual = datetime.date.today()
+        data_atual = date.today()
         inicio = '01/{}/{} 00:00'.format(data_atual.month, data_atual.year)
         fim = '30/{}/{} 23:59'.format(data_atual.month, data_atual.year)
-        inicio_mes = datetime.datetime.strptime(inicio, '%d/%m/%Y %H:%M')
-        fim_mes = datetime.datetime.strptime(fim, '%d/%m/%Y %H:%M')
-        labels = ['Receita prevista', 'Receita realizada']
+        inicio_mes = datetime.strptime(inicio, '%d/%m/%Y %H:%M')
+        fim_mes = datetime.strptime(fim, '%d/%m/%Y %H:%M')
+        labels = ['Receita prevista', 'Receita realizada', 'Despesa Prevista', 'Despesa Realizada']
 
-        valores = [round(self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes,
-                                               tipo_fatura='R').aggregate(Sum('valor_fatura'))['valor_fatura__sum'], 2),
+        valores = [self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R')
+                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
 
-                   round(self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes,
-                                               tipo_fatura='R', status='2').aggregate(Sum('valor_fatura'))['valor_fatura__sum'], 2)
+                   self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R', status='2')
+                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
+
+                   self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='D')
+                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
+                   self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='D', status='2')
+                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
 
                    ]
+
         result = []
 
         for v in valores:
