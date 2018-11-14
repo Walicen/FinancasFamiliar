@@ -13,7 +13,6 @@ class FaturaManager(models.Manager):
         fim = '30/{}/{} 23:59'.format(data_atual.month, data_atual.year)
         inicio_mes = datetime.strptime(inicio, '%d/%m/%Y %H:%M')
         fim_mes = datetime.strptime(fim, '%d/%m/%Y %H:%M')
-        labels = ['Receita prevista', 'Receita realizada', 'Despesa Prevista', 'Despesa Realizada']
 
         valores = [self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R')
                        .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
@@ -36,9 +35,4 @@ class FaturaManager(models.Manager):
             else:
                 result.append(0.00)
 
-        data ={
-            'labels': json.dumps(labels),
-            'valores': json.dumps(valores),
-        }
-
-        return data
+        return json.dumps(valores)

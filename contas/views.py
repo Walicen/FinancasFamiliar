@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
@@ -24,10 +25,13 @@ class Home(LoginRequiredMixin, View):
     login_url = '/'
 
     def get(self,  *args, **kwargs):
-
-        data = Fatura.objects.dashboard()
-        data['contas'] = Conta.objects.all(),
-        data['atrasadas'] = Fatura.objects.filter(data_vencimento__lt=datetime.date.today(), status__isnull=True, tipo_fatura='D')
+        label = ['Receita prevista', 'Receita realizada', 'Despesa Prevista', 'Despesa Realizada']
+        data = {
+            'contas': Conta.objects.all(),
+            'labels': json.dumps(label),
+            'valores': Fatura.objects.dashboard(),
+            'atrasadas': Fatura.objects.filter(data_vencimento__lt=datetime.date.today(), status__isnull=True, tipo_fatura='D')
+        }
 
         return render(self.request, 'home.html', data)
 
