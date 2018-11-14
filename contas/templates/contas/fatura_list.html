@@ -60,7 +60,7 @@
                             {{ fatura.tipo_fatura }}
                         </td>
                         <td style="max-width: 10px">
-                            {% if fatura.status == '3' %}
+                            {% if fatura.status == '2' %}
                                 <span class="badge badge-dot badge-lg">
                                   <i class="bg-success"></i>
                                 </span>
@@ -90,7 +90,7 @@
                        {% endif %}
                     </li>
                      {% for i in page_obj.paginator.page_range %}
-                        {% if jogos.number == i %}
+                        {% if page_obj.number == i %}
                             <li class="page-item active">
                                 <a class="page-link" href="#!">
                                     {{ i }} <span class="sr-only">(current)</span>

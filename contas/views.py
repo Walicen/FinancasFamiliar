@@ -10,8 +10,9 @@ from django.views.generic import DetailView, ListView, UpdateView, CreateView
 from .models import Fatura, Conta, Movimentacao, STATUS, Perfil, Sum
 from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm
 
+
 def logout_view(request):
-    logout_then_login(request,'')
+    logout_then_login(request, '')
 
 
 class PerfilViewDetail(LoginRequiredMixin, DetailView):
