@@ -47,7 +47,7 @@
  </div>
   <div class="container-fluid mt--6">
     <div class="row">
-        <div class="col-xl-9 mb-9 mb-xl-9">
+        <div class="col-xl-8 mb-8 mb-xl-8">
           <div class="card bg-gradient-default shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
@@ -63,27 +63,48 @@
             </div>
           </div>
 
-         <div class="col-xl-3 mb-3 mb-xl-3">
-          <div class="card bg-gradient-default">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-light ls-1 mb-1">teste</h6>
-                  <h4 class="text-white mb-0">testes</h4>
+         <div class="col-xl-4 mb-4 mb-xl-4">
+             <div class="card shadow">
+
+                <div class="card-header border-0">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <h6 class="text-uppercase ls-1 mb-1">Contas Atrasadas</h6>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="card-body">
-             teses
-            </div>
-            </div>
+
+
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                              <tr>
+                                <th></th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Data</th>
+                              </tr>
+                            </thead>
+
+                                {% for atrasada in atrasadas %}
+                                <tr>
+                                    <td style="max-width: 5px">
+                                        <a href="{{ atrasada.get_absolute_url }}" >
+                                            <i class="fas fa-plus-square" data-toggle="tooltip" data-placement="top" title="Criar Movimentação."></i>
+                                        </a>
+                                    </td>
+                                    <th scope="row">
+                                        {{ atrasada.descricao }}
+                                    </th>
+                                    <td>
+                                        {{ atrasada.data_vencimento|date:'d/m/Y' }}
+                                    </td>
+                                </tr>
+                         {% endfor %}
+                        </table>
+                    </div>
+
+             </div>
           </div>
-
-
-
-
-
-
         </div>
       </div>
     </div>
@@ -118,7 +139,6 @@
             },
             options: {
                 scales: {
-
                     yAxes: [{
                         ticks: {
                             beginAtZero:true
