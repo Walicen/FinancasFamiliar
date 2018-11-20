@@ -113,6 +113,7 @@ class Movimentacao(models.Model):
     conta = ForeignKey(Conta, on_delete=models.CASCADE, related_name='movimentacoes_conta')
     fatura = ForeignKey(Fatura, on_delete=models.CASCADE, related_name='movimentacoes')
     valor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    data = models.DateTimeField(auto_now_add=True, editable=False)
 
     class Meta:
         db_table = 'movimentacao'

@@ -44,15 +44,16 @@ class FaturaListView(LoginRequiredMixin, ListView):
     paginate_by = 7
 
 
-class FaturaPagarCreateView(LoginRequiredMixin,CreateView):
+class FaturaPagarCreateView(LoginRequiredMixin, CreateView):
     login_url = '/'
     model = Fatura
     form_class = FaturaForm
-    success_url = reverse_lazy('contas_fatura_list')
+    #success_url = reverse_lazy('contas_fatura_list')
 
 
 class MovimentacaoView(LoginRequiredMixin, View):
     login_url = '/'
+
     def post(self, request, fatura):
         texto_erro = ''
         texto_mensagem = ''
@@ -82,6 +83,7 @@ class MovimentacaoView(LoginRequiredMixin, View):
                             conta.saldo_conta += valor
                         else:
                             conta.saldo_conta -= valor
+
 
                     if movimenta:
                         movimentacao = Movimentacao.objects.create(
@@ -121,7 +123,7 @@ class FaturaDetailView(LoginRequiredMixin,View):
         movimentacoes = Movimentacao.objects.filter(fatura=fatura.pk)
         data = {
             'fatura': fatura,
-            'form': MovimentacaoForm(),
+            'form': MovimentacaoForm(initial={'valor': fatura.valor_fatura}),
             'lista': movimentacoes
         }
         return render(request, 'contas/fatura_detail.html', data)
@@ -149,6 +151,7 @@ class ContaCreateView(LoginRequiredMixin, CreateView):
     form_class = ContaForm
     success_url = reverse_lazy('contas_conta_list')
 
+
 class ContaDetailView(LoginRequiredMixin, DetailView):
     login_url = '/'
     model = Conta
@@ -157,5 +160,6 @@ class ContaDetailView(LoginRequiredMixin, DetailView):
 class ContaUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/'
     model = Conta
+    context_object_name = 'conta'
     form_class = ContaForm
 

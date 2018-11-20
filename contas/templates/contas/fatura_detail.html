@@ -19,9 +19,16 @@
                 <div class="col">
                   <h2 class="mb-0 gradient-primary">Quitar Lançamento</h2>
                 </div>
+                 <div class="col">
+                  <a href="{% url 'contas_fatura_create' %}" class="btn btn-outline-success">
+                       <i class="fas fa-plus-circle"></i>
+                       Novo Lançamento
+                  </a>
+                 </div>
               </div>
 
               {% if texto_mensagem  %}
+
               <div class="alert alert-success" role="alert">
                 <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
                 <span class="alert-inner--text">{{ texto_mensagem }}</span>
@@ -29,6 +36,7 @@
               {% endif %}
 
               {% if texto_erro  %}
+
               <div class="alert alert-danger" role="alert">
                 <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
                 <span class="alert-inner--text">{{ texto_erro }}</span>
@@ -52,9 +60,27 @@
               </form>
 
               {% if lista %}
-                {% for item in lista %}
-                    {{ item.valor }}
-                {% endfor %}
+               <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                              <tr>
+                                <th scope="col">Conta</th>
+                                <th scope="col">Valor</th>
+                              </tr>
+                            </thead>
+
+                              {% for item in lista %}
+                                <tr>
+                                    <th scope="row">
+                                        {{ item.valor }}
+                                    </th>
+                                    <td>
+                                        {{ item.conta }}
+                                    </td>
+                                </tr>
+                         {% endfor %}
+                        </table>
+                    </div>
               {% endif %}
             </div>
           </div>

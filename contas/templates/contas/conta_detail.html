@@ -1,14 +1,72 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
-<p><a class="btn btn-default" href="{% url 'contas_conta_list' %}">Conta Listing</a></p>
-<table class="table">
-<tr><td>nome</td><td>{{ object.nome }}</td></tr>
-<tr><td>data_inclusao</td><td>{{ object.data_inclusao }}</td></tr>
-<tr><td>data_alteracao</td><td>{{ object.data_alteracao }}</td></tr>
-<tr><td>tipo_conta</td><td>{{ object.tipo_conta }}</td></tr>
-<tr><td>saldo_conta</td><td>{{ object.saldo_conta }}</td></tr>
-</table>
-<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Conta</a>
 
+{% block content %}
+
+    <div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
+      <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 mb-12 mb-xl-12">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                      <div class="row align-items-center">
+
+                        <div class="col">
+                          <h2 class="mb-0 gradient-primary">Detalhes Conta</h2>
+                        </div>
+
+                         <div class="col">
+                          <a href="{{conta.get_update_url}}" class="btn btn-outline-light">
+                               <i class="fas fa-pencil"></i>
+                               Editar Conta
+                          </a>
+                         </div>
+
+                      </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <tr>
+                                <th scope="row">{{ conta.nome }}</th>
+                                <th scope="row">{{ conta.saldo_conta }}</th>
+                                <td scope="row">
+                                <div class="icon icon-shape text-white rounded-circle shadow {% if conta.tipo_conta == 'CC' %}
+                                            bg-primary
+                                            {% elif conta.tipo_conta == 'PO'%}
+                                            bg-info
+                                            {% else %}
+                                            bg-gradient-green
+                                        {% endif %} ">
+                                  </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <span class="center">Movimentações da Conta</span>
+            <ul class="list-group list-group-flush">
+            {% for mov in  conta.movimentacoes_conta.all %}
+                <li class="list-group-item">
+                {% if mov.fatura.tipo_fatura == 'D' %}
+                    <span> - {{ mov.valor }} - {{ mov.data }}</span>
+                {% else %}
+                    <span> + {{ mov.valor }} - {{ mov.data }}</span>
+                {% endif %}
+                </li>
+            {% endfor %}
+              </ul>
+        </div>
+    </div>
+        </div>
+    </div>
+    <a class="btn btn-default" href="{% url 'contas_conta_list' %}">Conta Listing</a></p>
+    <a class="btn btn-primary" href="{{conta.get_update_url}}">Edit Conta</a>
 {% endblock %}
+
+

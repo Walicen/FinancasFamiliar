@@ -11,6 +11,7 @@ class PerfilForm(forms.ModelForm):
         model = Movimentacao
         fields = '__all__'
 
+
 class MovimentacaoForm(forms.ModelForm):
     class Meta:
         model = Movimentacao
@@ -28,6 +29,7 @@ class MovimentacaoForm(forms.ModelForm):
         }
 
         localized_fields = {'valor'}
+
 
 class FaturaForm(forms.ModelForm):
     class Meta:
@@ -95,3 +97,8 @@ class ContaForm(forms.ModelForm):
                                         'placeholder': 'Tipo Conta',
                                         'label': 'Tipo Conta'}),
         }
+
+
+class ProjecoesForm(forms.Form):
+    pass
+    #
