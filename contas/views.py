@@ -1,6 +1,7 @@
 import datetime
 import json
 
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
 from django.shortcuts import render, redirect
@@ -44,7 +45,7 @@ class FaturaListView(LoginRequiredMixin, ListView):
     paginate_by = 7
 
 
-class FaturaPagarCreateView(LoginRequiredMixin, CreateView):
+class FaturaPagarCreateView(LoginRequiredMixin,CreateView):
     login_url = '/'
     model = Fatura
     form_class = FaturaForm
@@ -168,7 +169,7 @@ class ProjecaoView(LoginRequiredMixin, View):
     login_url = '/'
 
     def get(self, request):
-        form= ProjecaoForm(initial={'categoria': CATEGORIA}),
+        form = ProjecaoForm()
         data = {
             'form': form,
         }

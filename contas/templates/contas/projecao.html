@@ -18,14 +18,74 @@
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h2 class="mb-0 gradient-primary">Novo Lançamento</h2>
+                  <h2 class="mb-0 gradient-primary">Gerar Projeção</h2>
                 </div>
               </div>
             </div>
+
               <div class="container-fluid ">
                   <form method="post">
                     {% csrf_token %}
-                      {{ form.categoria }}
+                    <div class="row">
+
+             <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.tipo.label }}
+                    {{ form.tipo }}
+                </div>
+             </div>
+
+             <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.quantidade.label }}
+                    {{ form.quantidade }}
+                </div>
+             </div>
+
+             <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.categoria.label }}
+                    {{ form.categoria }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.descricao.label }}
+                    {{ form.descricao }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                     {{ form.data_inicial.label }}
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                        </div>
+                      {{ form.data_inicial }}
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.valor.label}}
+                    {{ form.valor}}
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-outline-success" type="submit">
+            <i class="fas fa-save"></i>
+            Salvar
+        </button>
+
+        <a class="btn btn-outline-default" href="{% url 'contas_fatura_list' %}">
+            <i class="fas fa-angle-left"></i>
+            Voltar
+        </a>
+        <br></br>
                   </form>
               </div>
           </div>

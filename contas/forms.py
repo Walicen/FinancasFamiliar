@@ -103,33 +103,23 @@ class ContaForm(forms.ModelForm):
 
 class ProjecaoForm(forms.Form):
 
-    quantidade = forms.IntegerField(label='Quantidade Parcelas', initial=1)
+    quantidade = forms.IntegerField(label='Quantidade Parcelas', initial=1,
+                                    widget=forms.TextInput(attrs={'placeholder': 'quantidade',
+                                                                   'class': 'form-control form-control-alternative'}))
 
-    descricao = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'descrição',
+    descricao = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Descrição',
                                                              'class': 'form-control form-control-alternative'}))
     data_inicial = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker form-control form-control-alternative',
                                                                  'placeholder': 'Data Vencimento'}))
 
     tipo = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                        'placeholder': 'Tipo Conta'}, choices=TIPO_FATURA)),
+                                                        'placeholder': 'Tipo Conta'}), label='Tipo Conta')
 
     valor = forms.DecimalField(widget=forms.TextInput(attrs={
                 'class': 'money form-control form-control-alternative',
-                'placeholder': 'Valor'}), localize=True)
+                'placeholder': 'Valor'}), localize=True, label='Valor Documento')
 
     categoria = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                             'placeholder': 'Categoria'}),
-                                  initial=[
-                                      ('1', 'Educação',),
-                                      ('2', 'Alimentação',),
-                                      ('3', 'Automóvel'),
-                                      ('4', 'Lazer'),
-                                      ('5', 'Sálario'),
-                                      ('6', 'Impostos'),
-                                      ('7', 'Farmácia'),
-                                      ('8', 'Moradia'),
-                                      ('9', 'Vestuário'),
-                                      ('10', 'Outros'),]
-                                  )
+                                                             'placeholder': 'Categoria'}), choices=[('1', 'Diego'), ('2', 'Denzer')])
 
 
