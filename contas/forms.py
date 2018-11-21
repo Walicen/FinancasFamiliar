@@ -108,14 +108,14 @@ class ProjecaoForm(forms.Form):
     descricao = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'descrição',
                                                              'class': 'form-control form-control-alternative'}))
     data_inicial = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker form-control form-control-alternative',
-                                                         'placeholder': 'Data Vencimento'})),
+                                                                 'placeholder': 'Data Vencimento'}))
 
     tipo = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                         'placeholder': 'Tipo Conta'}, choices=TIPO_FATURA)),
+                                                        'placeholder': 'Tipo Conta'}, choices=TIPO_FATURA)),
 
     valor = forms.DecimalField(widget=forms.TextInput(attrs={
                 'class': 'money form-control form-control-alternative',
-                'placeholder': 'Valor'}), localize=True),
+                'placeholder': 'Valor'}), localize=True)
 
     categoria = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
                                                              'placeholder': 'Categoria'}),

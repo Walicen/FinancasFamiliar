@@ -170,6 +170,6 @@ class ProjecaoView(LoginRequiredMixin, View):
     def get(self, request):
         form= ProjecaoForm(initial={'categoria': CATEGORIA}),
         data = {
-            'form': ProjecaoForm(),
+            'form': form,
         }
         return render(request, 'contas/projecao.html', data)
