@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import Fatura, Conta, Movimentacao, STATUS, Perfil, Sum
-from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm
+from .models import Fatura, Conta, Movimentacao, STATUS, Perfil, Sum, CATEGORIA
+from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm
 
 
 def logout_view(request):
@@ -163,3 +163,13 @@ class ContaUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'conta'
     form_class = ContaForm
 
+class ProjecaoView(LoginRequiredMixin, View):
+
+    login_url = '/'
+
+    def get(self, request):
+        form= ProjecaoForm(initial={'categoria': CATEGORIA}),
+        data = {
+            'form': ProjecaoForm(),
+        }
+        return render(request, 'contas/projecao.html', data)

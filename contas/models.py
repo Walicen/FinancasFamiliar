@@ -120,8 +120,6 @@ class Movimentacao(models.Model):
         ordering = ('-pk',)
 
 
-
-
 def cria_perfil(sender, instance, created, **kwargs):
     if created:
         Perfil.objects.create(user=instance)

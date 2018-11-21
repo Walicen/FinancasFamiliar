@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.forms import Textarea, TextInput, DateInput, NumberInput, Select
 from input_mask.fields import DecimalField
 
-from .models import Fatura, Conta, Movimentacao
+from .models import Fatura, Conta, Movimentacao, CATEGORIA, TIPO_FATURA
 
 
 class PerfilForm(forms.ModelForm):
@@ -32,6 +32,7 @@ class MovimentacaoForm(forms.ModelForm):
 
 
 class FaturaForm(forms.ModelForm):
+
     class Meta:
         model = Fatura
         fields = '__all__'
@@ -63,6 +64,7 @@ class FaturaForm(forms.ModelForm):
             'tipo_fatura': 'Receitas / Despesas',
             'valor_fatura': 'Valor'
         }
+
         '''
         def __init__(self, *args, **kwargs):
             super(FaturaForm, self).__init__(*args, **kwargs)
@@ -99,6 +101,35 @@ class ContaForm(forms.ModelForm):
         }
 
 
-class ProjecoesForm(forms.Form):
-    pass
-    #
+class ProjecaoForm(forms.Form):
+
+    quantidade = forms.IntegerField(label='Quantidade Parcelas', initial=1)
+
+    descricao = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'descrição',
+                                                             'class': 'form-control form-control-alternative'}))
+    data_inicial = forms.DateField(widget=forms.DateInput(attrs={'class': 'datepicker form-control form-control-alternative',
+                                                         'placeholder': 'Data Vencimento'})),
+
+    tipo = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
+                                                         'placeholder': 'Tipo Conta'}, choices=TIPO_FATURA)),
+
+    valor = forms.DecimalField(widget=forms.TextInput(attrs={
+                'class': 'money form-control form-control-alternative',
+                'placeholder': 'Valor'}), localize=True),
+
+    categoria = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
+                                                             'placeholder': 'Categoria'}),
+                                  initial=[
+                                      ('1', 'Educação',),
+                                      ('2', 'Alimentação',),
+                                      ('3', 'Automóvel'),
+                                      ('4', 'Lazer'),
+                                      ('5', 'Sálario'),
+                                      ('6', 'Impostos'),
+                                      ('7', 'Farmácia'),
+                                      ('8', 'Moradia'),
+                                      ('9', 'Vestuário'),
+                                      ('10', 'Outros'),]
+                                  )
+
+

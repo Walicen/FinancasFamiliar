@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
+      <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+        <div class="row">
+         <div class="col-xl-12 mb-12 mb-xl-12">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h2 class="mb-0 gradient-primary">Novo Lançamento</h2>
+                </div>
+              </div>
+            </div>
+              <div class="container-fluid ">
+                  <form method="post">
+                    {% csrf_token %}
+                      {{ form }}
+                  </form>
+              </div>
+          </div>
+        </div>
+        </div>
+
+{% endblock %}
