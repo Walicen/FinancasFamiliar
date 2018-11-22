@@ -113,13 +113,22 @@ class ProjecaoForm(forms.Form):
                                                                  'placeholder': 'Data Vencimento'}))
 
     tipo = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                        'placeholder': 'Tipo Conta'}), label='Tipo Conta')
+                                                        'placeholder': 'Tipo Fatura'}), label='Tipo Fatura', choices=[('R', 'RECEITA'),('D', 'DESPESA')])
 
     valor = forms.DecimalField(widget=forms.TextInput(attrs={
                 'class': 'money form-control form-control-alternative',
                 'placeholder': 'Valor'}), localize=True, label='Valor Documento')
 
     categoria = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                             'placeholder': 'Categoria'}), choices=[('1', 'Diego'), ('2', 'Denzer')])
+                                                             'placeholder': 'Categoria'}), choices=[('1', 'Educação'),
+    ('2', 'Alimentação'),
+    ('3', 'Automóvel'),
+    ('4', 'Lazer'),
+    ('5', 'Sálario'),
+    ('6', 'Impostos'),
+    ('7', 'Farmácia'),
+    ('8', 'Moradia'),
+    ('9', 'Vestuário'),
+    ('10', 'Outros')])
 
 

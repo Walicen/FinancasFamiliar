@@ -1,6 +1,6 @@
-import datetime
+from datetime import *
 import json
-
+import calendar
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
@@ -164,6 +164,7 @@ class ContaUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'conta'
     form_class = ContaForm
 
+
 class ProjecaoView(LoginRequiredMixin, View):
 
     login_url = '/'
@@ -174,3 +175,51 @@ class ProjecaoView(LoginRequiredMixin, View):
             'form': form,
         }
         return render(request, 'contas/projecao.html', data)
+
+    def post(self, request):
+        form = ProjecaoForm(request.POST)
+        if form.is_valid():
+
+            hoje = form.cleaned_data['data_inicial']
+            dia = hoje.day
+            mes = hoje.month
+            ano = hoje.year
+
+            for f in range(1, form.cleaned_data['quantidade']):
+                fatura = Fatura()
+                if f == 0:
+                    fatura.data_vencimento = form.cleaned_data['data_inicial']
+                    mes += 1
+                else:
+                    fim_mes = calendar.monthrange(ano, mes)
+                    if dia > 28 and mes == 2:
+                        temp_dia = 28
+                        dia_vencimento = '{}/{}/{} 00:01'.format(temp_dia, mes, ano)
+                    elif dia == 31 and fim_mes[1] == 30:
+                        temp_dia = 30
+                        dia_vencimento = '{}/{}/{} 00:01'.format(temp_dia, mes, ano)
+                    else:
+                        dia_vencimento = '{}/{}/{} 00:01'.format(dia, mes, ano)
+
+                    data = datetime.strptime(dia_vencimento, '%d/%m/%Y %H:%M')
+                    fatura.data_vencimento = data
+
+                    if mes == 12:
+                        mes = 1
+                        ano += 1
+                    else:
+                        mes += 1
+
+                fatura.categoria = form.cleaned_data['categoria']
+                fatura.valor_fatura = form.cleaned_data['valor']
+                fatura.tipo_fatura = form.cleaned_data['tipo']
+                fatura.status = '1'
+                fatura.descricao = "{} - {}".format(form.cleaned_data['descricao'], f)
+                fatura.save()
+
+            return redirect('contas_conta_list')
+        else:
+            data = {
+                'form': form,
+            }
+            return render(request, 'contas/projecao.html', data)
