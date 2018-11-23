@@ -4,7 +4,7 @@ import calendar
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
@@ -32,7 +32,7 @@ class Home(LoginRequiredMixin, View):
             'contas': Conta.objects.all(),
             'labels': json.dumps(label),
             'valores': Fatura.objects.dashboard(),
-            'atrasadas': Fatura.objects.filter(data_vencimento__lt=datetime.date.today(), status__isnull=True, tipo_fatura='D')
+            'atrasadas': Fatura.objects.filter(data_vencimento__lt=date.today(), status__isnull=True, tipo_fatura='D')
         }
 
         return render(self.request, 'home.html', data)
@@ -42,7 +42,8 @@ class FaturaListView(LoginRequiredMixin, ListView):
     login_url = '/'
     model = Fatura
     context_object_name = 'faturas'
-    paginate_by = 7
+    paginate_by = 10
+    queryset = Fatura.objects.filter(data_vencimento__gte=date.today())
 
 
 class FaturaPagarCreateView(LoginRequiredMixin,CreateView):
@@ -168,7 +169,6 @@ class ContaUpdateView(LoginRequiredMixin, UpdateView):
 class ProjecaoView(LoginRequiredMixin, View):
 
     login_url = '/'
-
     def get(self, request):
         form = ProjecaoForm()
         data = {
@@ -185,7 +185,7 @@ class ProjecaoView(LoginRequiredMixin, View):
             mes = hoje.month
             ano = hoje.year
 
-            for f in range(1, form.cleaned_data['quantidade']):
+            for f in range(1, form.cleaned_data['quantidade']+1):
                 fatura = Fatura()
                 if f == 0:
                     fatura.data_vencimento = form.cleaned_data['data_inicial']
@@ -214,10 +214,10 @@ class ProjecaoView(LoginRequiredMixin, View):
                 fatura.valor_fatura = form.cleaned_data['valor']
                 fatura.tipo_fatura = form.cleaned_data['tipo']
                 fatura.status = '1'
-                fatura.descricao = "{} - {}".format(form.cleaned_data['descricao'], f)
+                fatura.descricao = "{} / {} de {}".format(form.cleaned_data['descricao'], f, form.cleaned_data['quantidade'])
                 fatura.save()
 
-            return redirect('contas_conta_list')
+            return redirect('contas_fatura_list')
         else:
             data = {
                 'form': form,
