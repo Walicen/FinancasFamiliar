@@ -28,6 +28,7 @@ class Home(LoginRequiredMixin, View):
 
     def get(self,  *args, **kwargs):
         label = ['Receita prevista', 'Receita realizada', 'Despesa Prevista', 'Despesa Realizada']
+        Fatura.objects.novo_dash()
         data = {
             'contas': Conta.objects.all(),
             'labels': json.dumps(label),
@@ -144,7 +145,7 @@ class ContaListView(LoginRequiredMixin, ListView):
     login_url = '/'
     context_object_name = 'contas'
     model = Conta
-    paginate_by = 5
+    paginate_by = 10
 
 
 class ContaCreateView(LoginRequiredMixin, CreateView):

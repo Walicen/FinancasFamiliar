@@ -2,10 +2,26 @@ import simplejson as json
 from  datetime import *
 from django.db import models
 from django.db.models import Sum, Min, Max
-
+from django.db.models.functions import TruncMonth
 
 
 class FaturaManager(models.Manager):
+
+    def novo_dash(self):
+
+        data_atual = date.today()
+
+        teste = self.annotate(month=TruncMonth('data_vencimento')).values('month').annotate(c=Sum('valor_fatura')).order_by()
+        list = {}
+        for t in teste:
+            data = t['month']
+            valor = t['c']
+            list[data.month] = valor
+
+
+        return json.dumps(list)
+
+
 
     def dashboard(self):
         data_atual = date.today()
