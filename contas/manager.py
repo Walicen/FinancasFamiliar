@@ -11,15 +11,14 @@ class FaturaManager(models.Manager):
 
         data_atual = date.today()
 
-        teste = self.annotate(month=TruncMonth('data_vencimento')).values('month').annotate(c=Sum('valor_fatura')).order_by()
-        list = {}
-        for t in teste:
+        receitas_previstas = self.annotate(month=TruncMonth('data_vencimento')).values('month').annotate(valor=Sum('valor_fatura')).filter(tipo_fatura='R').order_by()
+        lista_valores = []
+        for t in receitas_previstas:
             data = t['month']
-            valor = t['c']
-            list[data.month] = valor
+            valor = t['valor']
+            lista_valores.insert(data.month-1, valor)
 
-
-        return json.dumps(list)
+        return json.dumps(lista_valores)
 
 
 

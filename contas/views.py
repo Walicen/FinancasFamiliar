@@ -27,9 +27,10 @@ class Home(LoginRequiredMixin, View):
     login_url = '/'
 
     def get(self,  *args, **kwargs):
-        label = ['Receita prevista', 'Receita realizada', 'Despesa Prevista', 'Despesa Realizada']
+        label = ['Jan', 'Fev', 'Mar', 'Abril', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
         Fatura.objects.novo_dash()
         data = {
+            'receitas': Fatura.objects.novo_dash(),
             'contas': Conta.objects.all(),
             'labels': json.dumps(label),
             'valores': Fatura.objects.dashboard(),

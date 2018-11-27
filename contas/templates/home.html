@@ -57,6 +57,7 @@
               </div>
             </div>
             <div class="card-body">
+                {{ receitas }}
                 <canvas id="myChart" width="400" height="100"></canvas>
             </div>
             </div>
@@ -111,7 +112,6 @@
 
     <script>
         var names = JSON.parse('{{ labels|safe }}');
-        var valores = JSON.parse('{{ valores|safe }}');
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -119,24 +119,39 @@
                 labels: names,
                 datasets: [{
                     label: 'Receber',
-                    data: valores,
+                    data: {{ receitas }},
                     yAxisID: 'y-axis-1',
                     backgroundColor: [
-                        'rgba(0,255,127, 0.2)',
-                        'rgba(50, 205, 50, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 150, 100, 0.2)'
-
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)',
+                        'rgba(0,139,139, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(0,255,127, 1)',
-                        'rgba(50, 205, 50, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 150, 100, 1)'
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)',
+                        'rgba(00,128,128, 1)'
                     ],
                     borderWidth: 1
                 },{
-                    label: 'Dataset 2',
+                    label: 'Pagar',
 				    yAxisID: 'y-axis-2',
 				    data: [4,5,56,1],
                     backgroundColor: [
@@ -164,12 +179,12 @@
 					},
                 scales: {
 						yAxes: [{
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							type: 'linear',
 							display: true,
 							position: 'left',
 							id: 'y-axis-1',
 						}, {
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							type: 'linear',
 							display: true,
 							position: 'right',
 							id: 'y-axis-2',
