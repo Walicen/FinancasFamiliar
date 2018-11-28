@@ -52,12 +52,11 @@
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
-                  <h6 class="text-uppercase text-light ls-1 mb-1">Receitas/Despesas</h6>
+                  <h6 class="text-uppercase text-light ls-1 mb-1">Receitas/Despesas 2019</h6>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                {{ receitas }}
                 <canvas id="myChart" width="400" height="100"></canvas>
             </div>
             </div>
@@ -112,6 +111,8 @@
 
     <script>
         var names = JSON.parse('{{ labels|safe }}');
+        var valores = JSON.parse('{{ receitas|safe }}');
+         var valores2 = JSON.parse('{{ despesas|safe }}');
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -119,7 +120,7 @@
                 labels: names,
                 datasets: [{
                     label: 'Receber',
-                    data: {{ receitas }},
+                    data: valores,
                     yAxisID: 'y-axis-1',
                     backgroundColor: [
                         'rgba(0,139,139, 0.2)',
@@ -136,37 +137,53 @@
                         'rgba(0,139,139, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)',
-                        'rgba(00,128,128, 1)'
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)',
+                        'rgba(0,128,128, 1)'
                     ],
                     borderWidth: 1
                 },{
                     label: 'Pagar',
 				    yAxisID: 'y-axis-2',
-				    data: [4,5,56,1],
-                    backgroundColor: [
-                        'rgba(0,255,127, 0.2)',
-                        'rgba(50, 205, 50, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 150, 100, 0.2)'
-
+				    data: valores2,
+                   backgroundColor: [
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)',
+                        'rgba(255,100,100, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(0,255,127, 1)',
-                        'rgba(50, 205, 50, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 150, 100, 1)'
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)',
+                        'rgba(255,100,100, 1)'
                     ],
+                     borderWidth: 1
                 }
 
                 ]

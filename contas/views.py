@@ -1,6 +1,8 @@
 from datetime import *
 import json
 import calendar
+
+from datetime import date
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
@@ -28,12 +30,11 @@ class Home(LoginRequiredMixin, View):
 
     def get(self,  *args, **kwargs):
         label = ['Jan', 'Fev', 'Mar', 'Abril', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
-        Fatura.objects.novo_dash()
         data = {
-            'receitas': Fatura.objects.novo_dash(),
+            'receitas': Fatura.objects.previsao_faturas(date.today().year, 'R'),
+            'despesas': Fatura.objects.previsao_faturas(date.today().year, 'D'),
             'contas': Conta.objects.all(),
             'labels': json.dumps(label),
-            'valores': Fatura.objects.dashboard(),
             'atrasadas': Fatura.objects.filter(data_vencimento__lt=date.today(), status__isnull=True, tipo_fatura='D')
         }
 

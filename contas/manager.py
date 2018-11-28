@@ -1,53 +1,40 @@
 import simplejson as json
-from  datetime import *
+
 from django.db import models
 from django.db.models import Sum, Min, Max
 from django.db.models.functions import TruncMonth
 
 
 class FaturaManager(models.Manager):
+    """ Retorna a previsão de faturas a pagar e receber tendo como parametros ano e tipo  """
 
-    def novo_dash(self):
+    def previsao_faturas(self, ano, tipo):
+        previstas = self.annotate(month=TruncMonth('data_vencimento')).values('month').annotate(
+            valor=Sum('valor_fatura')).filter(tipo_fatura=tipo, data_vencimento__year=ano).order_by()
+        # essa logica nao ficou muito pela minha falata de entendimento no orm do django assim que
+        # eu tiver mais bagagem arrumo isso pq ta feio demais
+        lista_valores = {
+            1: 0.00,
+            2: 0.00,
+            3: 0.00,
+            4: 0.00,
+            5: 0.00,
+            6: 0.00,
+            7: 0.00,
+            8: 0.00,
+            9: 0.00,
+            10: 0.00,
+            11: 0.00,
+            12: 0.00
+        }
+        for loop in range(1, 13):
+            for p in previstas:
+                d = p['month'].month
+                if d == loop:
+                    lista_valores[loop] = p['valor']
 
-        data_atual = date.today()
+        lista = []
 
-        receitas_previstas = self.annotate(month=TruncMonth('data_vencimento')).values('month').annotate(valor=Sum('valor_fatura')).filter(tipo_fatura='R').order_by()
-        lista_valores = []
-        for t in receitas_previstas:
-            data = t['month']
-            valor = t['valor']
-            lista_valores.insert(data.month-1, valor)
-
-        return json.dumps(lista_valores)
-
-
-
-    def dashboard(self):
-        data_atual = date.today()
-        inicio = '01/{}/{} 00:00'.format(data_atual.month, data_atual.year)
-        fim = '30/{}/{} 23:59'.format(data_atual.month, data_atual.year)
-        inicio_mes = datetime.strptime(inicio, '%d/%m/%Y %H:%M')
-        fim_mes = datetime.strptime(fim, '%d/%m/%Y %H:%M')
-
-        valores = [self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R')
-                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
-
-                   self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='R', status='2')
-                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
-
-                   self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='D')
-                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
-                   self.filter(data_vencimento__gte=inicio_mes, data_vencimento__lte=fim_mes, tipo_fatura='D', status='2')
-                       .aggregate(Sum('valor_fatura'))['valor_fatura__sum'],
-
-                   ]
-
-        result = []
-
-        for v in valores:
-            if v is not None:
-                result.append(v)
-            else:
-                result.append(0.00)
-
-        return json.dumps(valores)
+        for valor in lista_valores.values():
+            lista.append(valor)
+        return json.dumps(lista)
