@@ -29,7 +29,7 @@ class Home(LoginRequiredMixin, View):
     login_url = '/'
 
     def get(self,  *args, **kwargs):
-        label = ['Jan', 'Fev', 'Mar', 'Abril', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
+        label = ['Jan', 'Fev', 'Mar', 'Abril', 'Mai', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
         receitas = Fatura.objects.previsao_faturas(date.today().year, 'R')
         despesas = Fatura.objects.previsao_faturas(date.today().year, 'D')
 
