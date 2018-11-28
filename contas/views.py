@@ -30,9 +30,16 @@ class Home(LoginRequiredMixin, View):
 
     def get(self,  *args, **kwargs):
         label = ['Jan', 'Fev', 'Mar', 'Abril', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
+        receitas = Fatura.objects.previsao_faturas(date.today().year, 'R')
+        despesas = Fatura.objects.previsao_faturas(date.today().year, 'D')
+
+        maior = max(receitas, despesas)
+
+
         data = {
-            'receitas': Fatura.objects.previsao_faturas(date.today().year, 'R'),
-            'despesas': Fatura.objects.previsao_faturas(date.today().year, 'D'),
+            'maior': maior,
+            'receitas': receitas,
+            'despesas': despesas,
             'contas': Conta.objects.all(),
             'labels': json.dumps(label),
             'atrasadas': Fatura.objects.filter(data_vencimento__lt=date.today(), status__isnull=True, tipo_fatura='D')

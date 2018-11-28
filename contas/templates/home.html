@@ -200,12 +200,20 @@
 							display: true,
 							position: 'left',
 							id: 'y-axis-1',
+                            ticks: {
+							    min: 0,
+							    max: 10000
+						    }
 						}, {
 							type: 'linear',
-							display: true,
+							display: false,
+                            ticks: {
+							    min: 0,
+							    max: 10000
+						    },
 							position: 'right',
 							id: 'y-axis-2',
-							gridLines: {
+                            gridLines: {
 								drawOnChartArea: false
 							}
 						}]},
