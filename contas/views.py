@@ -6,12 +6,13 @@ from datetime import date
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 from .models import Fatura, Conta, Movimentacao, STATUS, Perfil, Sum, CATEGORIA
-from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm
+from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm, PesquisaFaturaForm
 
 
 def logout_view(request):
@@ -29,12 +30,18 @@ class Home(LoginRequiredMixin, View):
     login_url = '/'
 
     def get(self,  *args, **kwargs):
+
         label = ['Jan', 'Fev', 'Mar', 'Abril', 'Mai', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
         receitas = Fatura.objects.previsao_faturas(date.today().year, 'R')
         despesas = Fatura.objects.previsao_faturas(date.today().year, 'D')
 
-        maior = max(receitas, despesas)
+        maior_r = max(receitas)
+        maior_d = max(despesas)
 
+        if maior_d >= maior_r:
+            maior = int(maior_d)+100
+        else:
+            maior = int(maior_r)+100
 
         data = {
             'maior': maior,
@@ -48,12 +55,51 @@ class Home(LoginRequiredMixin, View):
         return render(self.request, 'home.html', data)
 
 
-class FaturaListView(LoginRequiredMixin, ListView):
+class FaturaListView(LoginRequiredMixin, View):
     login_url = '/'
-    model = Fatura
-    context_object_name = 'faturas'
-    paginate_by = 10
-    queryset = Fatura.objects.filter(data_vencimento__gte=date.today())
+
+    def post(self, request):
+        form = PesquisaFaturaForm(request.POST)
+        if form.is_valid():
+            inicio = form.cleaned_data['data_inicial']
+            fim = form.cleaned_data['data_final']
+
+        fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio, data_vencimento__lte=fim).order_by(
+            'data_vencimento')
+
+        paginator = Paginator(fatura_list, 10)
+
+        page = request.GET.get('page')
+        faturas = paginator.get_page(page)
+
+        context = {
+            'faturas': faturas,
+            'form': form
+        }
+
+        return render(request, 'contas/fatura_list.html', context)
+
+    def get(self, request):
+
+        inicio = date.today()
+
+        fim = date.fromordinal(inicio.toordinal() + 365)  # hoje + 60 dias
+
+        form = PesquisaFaturaForm(initial={'data_inicial': inicio , 'data_final': fim})
+
+        fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio, data_vencimento__lte=fim).order_by('data_vencimento')
+
+        paginator = Paginator(fatura_list, 10)
+
+        page = request.GET.get('page')
+        faturas = paginator.get_page(page)
+
+        context = {
+            'faturas': faturas,
+            'form': form
+        }
+
+        return render(request, 'contas/fatura_list.html', context)
 
 
 class FaturaPagarCreateView(LoginRequiredMixin,CreateView):
@@ -204,12 +250,12 @@ class ProjecaoView(LoginRequiredMixin, View):
                     fim_mes = calendar.monthrange(ano, mes)
                     if dia > 28 and mes == 2:
                         temp_dia = 28
-                        dia_vencimento = '{}/{}/{} 00:01'.format(temp_dia, mes, ano)
+                        dia_vencimento = '{}/{}/{} 12:00'.format(temp_dia, mes, ano)
                     elif dia == 31 and fim_mes[1] == 30:
                         temp_dia = 30
-                        dia_vencimento = '{}/{}/{} 00:01'.format(temp_dia, mes, ano)
+                        dia_vencimento = '{}/{}/{} 12:00'.format(temp_dia, mes, ano)
                     else:
-                        dia_vencimento = '{}/{}/{} 00:01'.format(dia, mes, ano)
+                        dia_vencimento = '{}/{}/{} 12:00'.format(dia, mes, ano)
 
                     data = datetime.strptime(dia_vencimento, '%d/%m/%Y %H:%M')
                     fatura.data_vencimento = data
