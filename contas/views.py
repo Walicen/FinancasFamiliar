@@ -35,12 +35,18 @@ class Home(LoginRequiredMixin, View):
         receitas = Fatura.objects.previsao_faturas(date.today().year, 'R')
         despesas = Fatura.objects.previsao_faturas(date.today().year, 'D')
 
+        gastos = Fatura.objects.gastos_realizados()
+        labelGrafico2 = gastos.keys()
+        valoresGrafico2 = gastos.values()
+
         data = {
             'receitas': receitas,
             'despesas': despesas,
             'contas': Conta.objects.all(),
             'labels': json.dumps(label),
-            'atrasadas': Fatura.objects.filter(data_vencimento__lt=date.today(), status__isnull=True, tipo_fatura='D')
+            'atrasadas': Fatura.objects.filter(data_vencimento__lt=date.today(), status__isnull=True, tipo_fatura='D'),
+            'labels2': labelGrafico2,
+            'valores2': valoresGrafico2
         }
 
         return render(self.request, 'home.html', data)
