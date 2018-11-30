@@ -63,7 +63,7 @@
           </div>
 
          <div class="col-xl-4 mb-4 mb-xl-4">
-             <div class="card shadow">
+             <div class="card shadow" style="max-width: 400px">
 
                 <div class="card-header border-0">
                   <div class="row align-items-center">
@@ -72,8 +72,6 @@
                     </div>
                   </div>
                 </div>
-
-
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
@@ -83,6 +81,8 @@
                                 <th scope="col">Data</th>
                               </tr>
                             </thead>
+                                {% if atrasadas %}
+
 
                                 {% for atrasada in atrasadas %}
                                 <tr>
@@ -99,6 +99,9 @@
                                     </td>
                                 </tr>
                          {% endfor %}
+                          {% else %}
+                              Parabéns sem contas Atrasadas.
+                          {% endif %}
                         </table>
                     </div>
 
@@ -202,14 +205,14 @@
 							id: 'y-axis-1',
                             ticks: {
 							    min: 0,
-							    max: {{ maior }}
+							    max: 7000
 						    }
 						}, {
 							type: 'linear',
 							display: false,
                             ticks: {
 							    min: 0,
-							    max: {{ maior }}
+							    max: 7000
 						    },
 							position: 'right',
 							id: 'y-axis-2',

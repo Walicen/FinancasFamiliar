@@ -143,21 +143,7 @@ class PesquisaFaturaForm(forms.Form):
 
     data_final = forms.DateField(
         widget=forms.DateInput(attrs={'class': 'datepicker form-control form-control-alternative',
-                                      'placeholder': 'Periodo Fim'}), label='Data Fim')
+                                       'placeholder': 'Periodo Fim'}), label='Data Fim')
 
 
-    tipo = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                        'placeholder': 'Tipo Fatura'}), label='Tipo Fatura',
-                             choices=[('R', 'RECEITA'), ('D', 'DESPESA')])
 
-    categoria = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
-                                                             'placeholder': 'Categoria'}), label='Categoria', choices=[('1', 'Educação'),
-                                                                                                    ('2', 'Alimentação'),
-                                                                                                    ('3', 'Automóvel'),
-                                                                                                    ('4', 'Lazer'),
-                                                                                                    ('5', 'Sálario'),
-                                                                                                    ('6', 'Impostos'),
-                                                                                                    ('7', 'Farmácia'),
-                                                                                                    ('8', 'Moradia'),
-                                                                                                    ('9', 'Vestuário'),
-                                                                                                    ('10', 'Outros')])

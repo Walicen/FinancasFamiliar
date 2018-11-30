@@ -35,16 +35,7 @@ class Home(LoginRequiredMixin, View):
         receitas = Fatura.objects.previsao_faturas(date.today().year, 'R')
         despesas = Fatura.objects.previsao_faturas(date.today().year, 'D')
 
-        maior_r = max(receitas)
-        maior_d = max(despesas)
-
-        if maior_d >= maior_r:
-            maior = int(maior_d)+100
-        else:
-            maior = int(maior_r)+100
-
         data = {
-            'maior': maior,
             'receitas': receitas,
             'despesas': despesas,
             'contas': Conta.objects.all(),
@@ -63,9 +54,16 @@ class FaturaListView(LoginRequiredMixin, View):
         if form.is_valid():
             inicio = form.cleaned_data['data_inicial']
             fim = form.cleaned_data['data_final']
+            descricao = form.cleaned_data['descricao']
 
-        fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio, data_vencimento__lte=fim).order_by(
-            'data_vencimento')
+        if descricao is not None:
+            fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio,
+                                                data_vencimento__lte=fim,
+                                                descricao__icontains=descricao).order_by(
+                'data_vencimento')
+        else:
+            fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio, data_vencimento__lte=fim).order_by(
+                'data_vencimento')
 
         paginator = Paginator(fatura_list, 10)
 
@@ -83,7 +81,7 @@ class FaturaListView(LoginRequiredMixin, View):
 
         inicio = date.today()
 
-        fim = date.fromordinal(inicio.toordinal() + 365)  # hoje + 60 dias
+        fim = date.fromordinal(inicio.toordinal() + 30)  # hoje + 60 dias
 
         form = PesquisaFaturaForm(initial={'data_inicial': inicio , 'data_final': fim})
 
