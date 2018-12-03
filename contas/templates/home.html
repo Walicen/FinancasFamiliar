@@ -47,22 +47,42 @@
  </div>
   <div class="container-fluid mt--6">
     <div class="row">
-        <div class="col-xl-8 mb-8 mb-xl-8">
-          <div class="card bg-gradient-default shadow">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-light ls-1 mb-1">Receitas/Despesas 2019</h6>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-                <canvas id="myChart" width="400" height="100"></canvas>
-            </div>
-            </div>
-          </div>
 
-         <div class="col-xl-4 mb-4 mb-xl-4">
+        <div class="col-xl-12 mb-12 mb-xl-12">
+            <div class="card bg-gradient-default shadow">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-light ls-1 mb-1">Receitas/Despesas 2019</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart" width="400" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-xl-7 mb-7 mb-xl-7">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-light ls-1 mb-1">Despesas Realizadas</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+
+         <div class="col-xl-5 mb-5 mb-xl-5">
              <div class="card shadow" style="max-width: 400px">
 
                 <div class="card-header border-0">
@@ -99,7 +119,9 @@
                                 </tr>
                          {% endfor %}
                           {% else %}
-                              Parabéns sem contas Atrasadas.
+                            <div class="alert alert-success" role="alert">
+                                <strong>Parabéns sem contas Atrasadas.</strong>
+                            </div>
                           {% endif %}
                         </table>
                     </div>
@@ -108,16 +130,56 @@
           </div>
         </div>
 
-      <div class="row">
-          {{ labels2 }}
-          {{ valores2 }}
-      </div>
-
-
-
       </div>
     </div>
   </div>
+
+
+    <script>
+
+        var yt = JSON.parse('{{ labels2|safe }}');
+         var xt = JSON.parse('{{ valores2|safe }}');
+        var config = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: xt
+					,
+					backgroundColor: [
+						'rgba(186,85,211, 0.4)',
+						'rgba(70,130,180, 0.4)',
+						'rgba(165,42,42, 0.4)',
+						'rgba(255,165,0, 0.4)',
+                        'rgba(107,142,35, 0.4)',
+                        'rgba(184,134,11, 0.4)',
+                        'rgba(72,61,139, 0.4)',
+                        'rgba(219,112,147, 0.4)',
+                        'rgba(255,215,0, 0.4)',
+                        'rgba(34,139,34, 0.4)',
+					],
+					label: 'Dataset 1'
+				}],
+				labels:yt
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Despesas Realizadas'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		};
+
+        var ctx = document.getElementById('myChart2').getContext('2d');
+        var myChart2 = new Chart(ctx, config);
+    </script>
 
     <script>
         var names = JSON.parse('{{ labels|safe }}');
