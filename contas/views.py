@@ -94,9 +94,11 @@ class FaturaListView(LoginRequiredMixin, View):
 
     def get(self, request):
 
-        inicio = date.today()
+        hoje = date.today()
 
-        fim = date.fromordinal(inicio.toordinal() + 30)  # hoje + 60 dias
+        inicio = date.fromordinal(hoje.toordinal() - 45)  # hoje - 60 dias
+
+        fim = date.fromordinal(hoje.toordinal() + 45)  # hoje + 45 dias
 
         form = PesquisaFaturaForm(initial={'data_inicial': inicio , 'data_final': fim})
 
