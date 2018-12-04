@@ -31,6 +31,7 @@ urlpatterns += (
     path('fatura/update/<int:pk>/', views.FaturaUpdateView.as_view(), name='contas_fatura_update'),
     path('fatura/movimentacao/<int:fatura>', views.MovimentacaoView.as_view(), name='movimentacao'),
     path('fatura/projecao', views.ProjecaoView.as_view(), name='projecao')
+
 )
 
 urlpatterns += (
@@ -39,4 +40,5 @@ urlpatterns += (
     path('conta/create/', views.ContaCreateView.as_view(), name='contas_conta_create'),
     path('conta/detail/<int:pk>/', views.ContaDetailView.as_view(), name='contas_conta_detail'),
     path('conta/update/<int:pk>/', views.ContaUpdateView.as_view(), name='contas_conta_update'),
+    path('conta/transferencia', views.TransferenciaView.as_view(), name='transferencia')
 )

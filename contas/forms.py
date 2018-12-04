@@ -135,7 +135,7 @@ class ProjecaoForm(forms.Form):
 class PesquisaFaturaForm(forms.Form):
 
     descricao = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Descrição',
-                                                              'class': 'form-control form-control-alternative'}))
+                                                              'class': 'form-control form-control-alternative'}), required=False)
 
     data_inicial = forms.DateField(
         widget=forms.DateInput(attrs={'class': 'datepicker form-control form-control-alternative',
@@ -147,3 +147,16 @@ class PesquisaFaturaForm(forms.Form):
 
 
 
+class TransferenciaForm(forms.Form):
+
+    conta_sair = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
+                                                        'placeholder': 'Conta Saída'}), label='Conta Saída',
+                                          queryset=Conta.objects.all())
+
+    conta_entrada = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control form-control-alternative',
+                                                                     'placeholder': 'Conta Entrada'}),
+                                          label='Conta Entrada', queryset=Conta.objects.all())
+
+    valor = forms.DecimalField(widget=forms.TextInput(attrs={
+        'class': 'money form-control form-control-alternative',
+        'placeholder': 'Valor'}), localize=True, label='Valor Transferência')

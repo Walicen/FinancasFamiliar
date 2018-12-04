@@ -1,19 +1,19 @@
-from datetime import *
-import simplejson as json
-
 import calendar
-
+from datetime import *
 from datetime import date
-from django.contrib.auth import logout
+
+import simplejson as json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import logout_then_login
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
-from .models import Fatura, Conta, Movimentacao, STATUS, Perfil, Sum, CATEGORIA
-from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm, PesquisaFaturaForm
+
+from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm, PesquisaFaturaForm, \
+    TransferenciaForm
+from .models import Fatura, Conta, Movimentacao, Perfil
 
 
 def logout_view(request):
@@ -30,7 +30,7 @@ class PerfilViewDetail(LoginRequiredMixin, DetailView):
 class Home(LoginRequiredMixin, View):
     login_url = '/'
 
-    def get(self,  *args, **kwargs):
+    def get(self, request):
 
         label = ['Jan', 'Fev', 'Mar', 'Abril', 'Mai', 'Jun', 'Jul', 'Set', 'Ago', 'Out', 'Nov', 'Dez']
         receitas = Fatura.objects.previsao_faturas(date.today().year, 'R')
@@ -58,7 +58,7 @@ class Home(LoginRequiredMixin, View):
             'valores2': json.dumps(valoresGrafico2)
         }
 
-        return render(self.request, 'home.html', data)
+        return render(request, 'home.html', data)
 
 
 class FaturaListView(LoginRequiredMixin, View):
@@ -96,7 +96,7 @@ class FaturaListView(LoginRequiredMixin, View):
 
         hoje = date.today()
 
-        inicio = date.fromordinal(hoje.toordinal() - 45)  # hoje - 60 dias
+        inicio = date.fromordinal(hoje.toordinal() - 45)  # hoje - 45 dias
 
         fim = date.fromordinal(hoje.toordinal() + 45)  # hoje + 45 dias
 
@@ -107,6 +107,7 @@ class FaturaListView(LoginRequiredMixin, View):
         paginator = Paginator(fatura_list, 10)
 
         page = request.GET.get('page')
+
         faturas = paginator.get_page(page)
 
         context = {
@@ -285,7 +286,7 @@ class ProjecaoView(LoginRequiredMixin, View):
                 fatura.valor_fatura = form.cleaned_data['valor']
                 fatura.tipo_fatura = form.cleaned_data['tipo']
                 fatura.status = '1'
-                fatura.descricao = "{} / {} de {}".format(form.cleaned_data['descricao'], f, form.cleaned_data['quantidade'])
+                fatura.descricao = "{} - {} de {}".format(form.cleaned_data['descricao'], f, form.cleaned_data['quantidade'])
                 fatura.save()
 
             return redirect('contas_fatura_list')
@@ -294,3 +295,33 @@ class ProjecaoView(LoginRequiredMixin, View):
                 'form': form,
             }
             return render(request, 'contas/projecao.html', data)
+
+class TransferenciaView(LoginRequiredMixin, View):
+    login_url = '/'
+
+    def get(self,request):
+        return render(request,'contas/transferencia.html', {'form': TransferenciaForm()})
+
+    def post(self,request):
+
+        form = TransferenciaForm(request.POST)
+
+        if form.is_valid():
+            conta_entrada = form.cleaned_data['conta_entrada']
+            conta_saida = form.cleaned_data['conta_sair']
+            valor = form.cleaned_data['valor']
+            if conta_entrada.id == conta_saida.id:
+                return render(request, 'contas/transferencia.html', {'form': form, 'msg_erro': 'Conta igual para entrada e saída'})
+            else:
+                if conta_saida.saldo_conta < valor:
+                    return render(request, 'contas/transferencia.html', {'form': form, 'msg_erro': 'Conta saída sem saldo para transferência.'})
+                else:
+                    conta_entrada.saldo_conta += valor
+                    conta_saida.saldo_conta -= valor
+                    conta_entrada.save()
+                    conta_saida.save()
+
+                    return render(request, 'contas/transferencia.html', {'form': TransferenciaForm(), 'msg_sucesso': 'Transferência realizada com sucesso'})
+        else:
+            return render(request, 'contas/transferencia.html', {'form': form})
+

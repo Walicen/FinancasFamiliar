@@ -64,9 +64,9 @@
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-xl-7 mb-7 mb-xl-7">
-            <div class="card shadow" style="max-width: 400px">
+    <div class="row mt-2">
+        <div class="col-xl-12 mb-12 mb-xl-12">
+            <div class="card shadow">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -79,11 +79,10 @@
                 </div>
             </div>
         </div>
-
-
-
-         <div class="col-xl-5 mb-5 mb-xl-5">
-             <div class="card shadow" style="max-width: 400px">
+    </div>
+    <div class="row mt-2">
+         <div class="col-xl-12 mb-12 mb-xl-12">
+             <div class="card shadow">
 
                 <div class="card-header border-0">
                   <div class="row align-items-center">
@@ -119,8 +118,8 @@
                                 </tr>
                          {% endfor %}
                           {% else %}
-                            <div class="alert alert-success" role="alert">
-                                <strong>Parabéns sem contas Atrasadas.</strong>
+                            <div class="alert alert-success" role="alert" style="padding: 5px">
+                                <strong>Parabéns sem contas atrasadas.</strong>
                             </div>
                           {% endif %}
                         </table>
@@ -143,8 +142,7 @@
 			type: 'doughnut',
 			data: {
 				datasets: [{
-					data: xt
-					,
+					data: xt,
 					backgroundColor: [
 						'rgba(186,85,211, 0.4)',
 						'rgba(70,130,180, 0.4)',
@@ -164,7 +162,7 @@
 			options: {
 				responsive: true,
 				legend: {
-					position: 'top',
+					position: 'bottom',
 				},
 				title: {
 					display: false,

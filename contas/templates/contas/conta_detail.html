@@ -31,6 +31,7 @@
 
                       </div>
                     </div>
+                    <div class="row">
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <tr>
@@ -49,24 +50,26 @@
                             </tr>
                         </table>
                     </div>
+                    </div>
+                    <div class="row">
                     <span class="center">Movimentações da Conta</span>
-            <ul class="list-group list-group-flush">
-            {% for mov in  conta.movimentacoes_conta.all %}
-                <li class="list-group-item">
-                {% if mov.fatura.tipo_fatura == 'D' %}
-                    <span> - {{ mov.valor }} - {{ mov.data }}</span>
-                {% else %}
-                    <span> + {{ mov.valor }} - {{ mov.data }}</span>
-                {% endif %}
-                </li>
-            {% endfor %}
-              </ul>
+                    <ul class="list-group list-group-flush">
+                    {% for mov in  conta.movimentacoes_conta.all %}
+                        <li class="list-group-item">
+                        {% if mov.fatura.tipo_fatura == 'D' %}
+                            <span> <b style="color: red">-</b> {{ mov.valor }} - {{ mov.data }}</span>
+                        {% else %}
+                            <span> <b style="color: green">+</b> {{ mov.valor }} - {{ mov.data }}</span>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    </div>
         </div>
     </div>
         </div>
     </div>
-    <a class="btn btn-default" href="{% url 'contas_conta_list' %}">Conta Listing</a></p>
-    <a class="btn btn-primary" href="{{conta.get_update_url}}">Edit Conta</a>
+
 {% endblock %}
 
 

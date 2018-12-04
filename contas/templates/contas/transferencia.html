@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <div class="header bg-gradient-primary pb-7 pt-4 pt-md-7">
+      <div class="container-fluid">
+        <div class="header-body">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 mb-12 mb-xl-12">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="mb-0 gradient-primary">Transferência</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid ">
+
+                         {% if msg_sucesso  %}
+
+                              <div class="alert alert-success" role="alert">
+                                <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
+                                <span class="alert-inner--text">{{ msg_sucesso }}</span>
+                              </div>
+                              {% endif %}
+
+                              {% if msg_erro  %}
+
+                              <div class="alert alert-danger" role="alert">
+                                <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
+                                <span class="alert-inner--text">{{ msg_erro }}</span>
+                              </div>
+                         {% endif %}
+
+
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.conta_sair.label }}
+                                        {{ form.conta_sair }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.conta_entrada.label }}
+                                        {{ form.conta_entrada }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.valor.label }}
+                                        {{ form.valor }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-retweet"></i>
+                                Transferir
+                            </button>
+
+                            <a class="btn btn-outline-default" href="{% url 'contas_conta_list' %}">
+                                <i class="fas fa-angle-left"></i>
+                                Voltar
+                            </a>
+                            <br></br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
