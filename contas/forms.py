@@ -3,12 +3,12 @@ from django.contrib.auth.models import User
 from django.forms import Textarea, TextInput, DateInput, NumberInput, Select
 from input_mask.fields import DecimalField
 
-from .models import Fatura, Conta, Movimentacao, CATEGORIA, TIPO_FATURA
+from .models import Fatura, Conta, Movimentacao, CATEGORIA, TIPO_FATURA, Perfil
 
 
 class PerfilForm(forms.ModelForm):
     class Meta:
-        model = Movimentacao
+        model = Perfil
         fields = '__all__'
 
 

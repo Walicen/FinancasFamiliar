@@ -3,7 +3,9 @@ from datetime import *
 from datetime import date
 
 import simplejson as json
+from allauth.account.forms import UserForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import logout_then_login
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
@@ -325,3 +327,8 @@ class TransferenciaView(LoginRequiredMixin, View):
         else:
             return render(request, 'contas/transferencia.html', {'form': form})
 
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/'
+    model = User
+    form_class = UserForm
