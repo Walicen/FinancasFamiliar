@@ -17,9 +17,8 @@ urlpatterns = (
 
 urlpatterns += (
     path('home', views.Home.as_view(), name='home'),
-    path('perfil/<int:pk>/', views.PerfilViewDetail.as_view(), name='perfil'),
-    # Em testes
-    path('perfil/update/<int:pk>/', views.UserUpdateView.as_view(), name='perfil_update'),
+    path('perfil', views.PerfilViewDetail.as_view(), name='perfil'),
+    # Em testes  path('perfil/update/<int:pk>/', views.UserUpdateView.as_view(), name='perfil_update'),
     path('', v.login, name="account_login"),
    # path('logout', v.logout,{'next_page': '/'}, name='account_logout')
     path('', views.logout_view , name='logout'),

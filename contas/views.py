@@ -3,7 +3,6 @@ from datetime import *
 from datetime import date
 
 import simplejson as json
-from allauth.account.forms import UserForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import logout_then_login
@@ -13,6 +12,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 
+from contas.admin import CustomUserAdmin
 from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm, PesquisaFaturaForm, \
     TransferenciaForm
 from .models import Fatura, Conta, Movimentacao, Perfil
@@ -22,11 +22,11 @@ def logout_view(request):
     logout_then_login(request, '')
 
 
-class PerfilViewDetail(LoginRequiredMixin, DetailView):
+class PerfilViewDetail(LoginRequiredMixin, View):
     login_url = '/'
-    model = Perfil
-    form_class = PerfilForm
-    template_name = 'perfil.html'
+    template_name = 'contas/perfil.html'
+
+
 
 
 class Home(LoginRequiredMixin, View):
@@ -328,7 +328,7 @@ class TransferenciaView(LoginRequiredMixin, View):
             return render(request, 'contas/transferencia.html', {'form': form})
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, DetailView):
     login_url = '/'
     model = User
-    form_class = UserForm
+    template_name = 'contas/perfil.html'

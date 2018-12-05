@@ -19,15 +19,16 @@
                             <h2 class="mb-0">Contas</h2>
                         </div>
                         <div class="col">
-                            <a class="btn btn-outline-success" href="{% url 'contas_conta_create' %}">
+                            <a class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Criar nova conta"
+                               href="{% url 'contas_conta_create' %}">
                                 <i class="fas fa-plus-circle"></i>
                                 Nova Conta
                             </a>
                         </div>
 
                          <div class="col">
-                            <a class="btn btn-outline-primary" href="{% url 'transferencia' %}">
-                                <i class="fas fa-retweet"></i>
+                            <a class="btn btn-outline-primary" href="{% url 'transferencia' %}" data-toggle="tooltip" data-placement="top" title="Transferência entre contas">
+                                <i class="fas fa-retweet" data-toggle="tooltip" data-placement="top" title="Transferência entre contas" ></i>
                                 Transferência
                             </a>
                         </div>
