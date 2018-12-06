@@ -1,7 +1,7 @@
 import calendar
 from datetime import *
 from datetime import date
-
+from django.core.mail import BadHeaderError, send_mail
 import simplejson as json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -12,7 +12,6 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 
-from contas.admin import CustomUserAdmin
 from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm, PesquisaFaturaForm, \
     TransferenciaForm
 from .models import Fatura, Conta, Movimentacao, Perfil
@@ -25,8 +24,6 @@ def logout_view(request):
 class PerfilViewDetail(LoginRequiredMixin, View):
     login_url = '/'
     template_name = 'contas/perfil.html'
-
-
 
 
 class Home(LoginRequiredMixin, View):
@@ -172,9 +169,17 @@ class MovimentacaoView(LoginRequiredMixin, View):
                         if fatura.valor_pago == fatura.valor_fatura:
                             fatura.status = '2'
                             texto_mensagem = 'Lançamento quitado com sucesso'
+
                         fatura.save()
                         # atualizando conta
                         conta.save()
+
+                        send_mail(
+                            'TEste 1',# Assunto
+                            'Lançamento {} quitado com sucesso'.format(fatura.descricao), # Corpo
+                            'diegodenzer.devops@gmail.com',
+                            ['diegodenzer.devops@gmail.com']
+                        )
                 else:
                     texto_erro = 'Valor do lançamento maior que o valor da fatura!'
             else:
