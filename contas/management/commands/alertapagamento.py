@@ -30,13 +30,13 @@ class Command(BaseCommand):
                     for fatura in vencimentos_hoje:
                         lista.append('\n {} - valor: R$'.format(fatura.descricao, fatura.valor_fatura))
                 else:
-                    lista.append('\n Sem Lançamentos atrasados\n')
+                    lista.append('\n Sem vencimentos hoje\n')
 
                 send_mail(
                     'Financeiro Familiar',  # Assunto
                     ''.join(lista),  # Corpo
                     'diegodenzer.devops@gmail.com',
-                    ['diegodenzer.devops@gmail.com']
+                    ['diegodenzer.devops@gmail.com', 'simonetn.eng@hotmail.com']
                 )
                 self.stdout.write(self.style.SUCCESS('Enviando'))
 

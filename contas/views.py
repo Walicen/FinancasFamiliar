@@ -169,17 +169,18 @@ class MovimentacaoView(LoginRequiredMixin, View):
                         if fatura.valor_pago == fatura.valor_fatura:
                             fatura.status = '2'
                             texto_mensagem = 'Lançamento quitado com sucesso'
+                            send_mail(
+                                'Finanças Familiar',  # Assunto
+                                'Lançamento {} - R$ {} quitado com sucesso'.format(fatura.descricao, fatura.valor_pago),
+                                # Corpo
+                                'diegodenzer.devops@gmail.com',
+                                ['diegodenzer.devops@gmail.com', 'simonetn.eng@hotmail.com']
+                            )
 
                         fatura.save()
                         # atualizando conta
                         conta.save()
 
-                        send_mail(
-                            'TEste 1',# Assunto
-                            'Lançamento {} quitado com sucesso'.format(fatura.descricao), # Corpo
-                            'diegodenzer.devops@gmail.com',
-                            ['diegodenzer.devops@gmail.com']
-                        )
                 else:
                     texto_erro = 'Valor do lançamento maior que o valor da fatura!'
             else:
