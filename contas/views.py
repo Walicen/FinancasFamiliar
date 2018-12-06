@@ -12,6 +12,11 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView, UpdateView, CreateView
 
+from weasyprint import HTML, CSS
+from django.template.loader import get_template
+from django.http import HttpResponse
+
+
 from .forms import FaturaForm, ContaForm, MovimentacaoForm, PerfilForm, ProjecaoForm, PesquisaFaturaForm, \
     TransferenciaForm
 from .models import Fatura, Conta, Movimentacao, Perfil
@@ -58,6 +63,23 @@ class Home(LoginRequiredMixin, View):
         }
 
         return render(request, 'home.html', data)
+
+
+def pdf_generation(request):
+    html_template = []
+    html_template.append( '<ul>')
+    # Weasyprint
+    fatura_list = Fatura.objects.filter(data_vencimento__lte=date.today()).order_by('data_vencimento')
+
+    for f in fatura_list:
+        html_template.append('<li>{}</li>'.format(f.descricao))
+
+    html_template.append('<ul>')
+
+    pdf_file = HTML(string=''.join(html_template)).write_pdf()
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="teste.pdf"'
+    return response
 
 
 class FaturaListView(LoginRequiredMixin, View):

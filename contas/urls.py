@@ -31,7 +31,8 @@ urlpatterns += (
     path('fatura/detail/<int:pk>/', views.FaturaDetailView.as_view(), name='contas_fatura_detail'),
     path('fatura/update/<int:pk>/', views.FaturaUpdateView.as_view(), name='contas_fatura_update'),
     path('fatura/movimentacao/<int:fatura>', views.MovimentacaoView.as_view(), name='movimentacao'),
-    path('fatura/projecao', views.ProjecaoView.as_view(), name='projecao')
+    path('fatura/projecao', views.ProjecaoView.as_view(), name='projecao'),
+    path('fatura/pdf', views.pdf_generation, name='pdf')
 
 )
 
