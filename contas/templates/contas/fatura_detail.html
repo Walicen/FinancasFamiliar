@@ -28,18 +28,20 @@
               </div>
 
               {% if texto_mensagem  %}
-
-              <div class="alert alert-success" role="alert">
-                <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
-                <span class="alert-inner--text">{{ texto_mensagem }}</span>
+              <div class="row mt-1">
+                  <div class="alert alert-success" role="alert">
+                    <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
+                    <span class="alert-inner--text">{{ texto_mensagem }}</span>
+                  </div>
               </div>
               {% endif %}
 
               {% if texto_erro  %}
-
-              <div class="alert alert-danger" role="alert">
-                <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
-                <span class="alert-inner--text">{{ texto_erro }}</span>
+              <div class="row mt-1">
+                  <div class="alert alert-danger" role="alert">
+                    <span class="alert-inner--icon"><i class="fas fa-aler"></i></span>
+                    <span class="alert-inner--text">{{ texto_erro }}</span>
+                  </div>
               </div>
               {% endif %}
 
@@ -59,7 +61,9 @@
               </form>
 
               {% if lista %}
+
                <div class="row">
+               <div class="container">
                <div class="table-responsive">
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
@@ -80,6 +84,7 @@
                                 </tr>
                          {% endfor %}
                         </table>
+                    </div>
                     </div>
                </div>
               {% endif %}

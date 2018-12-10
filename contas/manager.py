@@ -19,8 +19,18 @@ CATEGORIA = (
 )
 
 
-
 class FaturaManager(models.Manager):
+
+    def listar_faturas(self, inicio, fim, descricao):
+
+        if descricao is not None:
+            fatura_list = self.filter(data_vencimento__gte=inicio,
+                                            data_vencimento__lte=fim,
+                                            descricao__icontains=descricao).order_by('data_vencimento')
+        else:
+            fatura_list = self.filter(data_vencimento__gte=inicio, data_vencimento__lte=fim).order_by('data_vencimento')
+
+        return fatura_list
 
     def gastos_realizados(self):
         gastos_ano = self.values('categoria').annotate(

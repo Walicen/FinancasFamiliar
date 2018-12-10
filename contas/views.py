@@ -65,18 +65,45 @@ class Home(LoginRequiredMixin, View):
         return render(request, 'home.html', data)
 
 
+def gerar_arquivo(dados, titulo):
+    ''' Em desenvolvimento ainda  '''
+    modelo_pdf = []
+    modelo_pdf.append('<html><body>')
+    modelo_pdf.append("<h3 style='color: blue'>")
+    modelo_pdf.append('Em desenvolvimento !!!<br></br>')
+    modelo_pdf.append(titulo)
+    modelo_pdf.append('</h3>')
+    modelo_pdf.append('<table>')
+    modelo_pdf.append('<tr>')
+    modelo_pdf.append('<td>')
+    modelo_pdf.append('Descrição')
+    modelo_pdf.append('</td>')
+    modelo_pdf.append('<td>')
+    modelo_pdf.append('Valor')
+    modelo_pdf.append('</td>')
+    modelo_pdf.append('</tr>')
+
+    for dado in dados:
+        modelo_pdf.append('<tr>')
+        modelo_pdf.append('<td>')
+        modelo_pdf.append(dado.descricao)
+        modelo_pdf.append('</td>')
+        modelo_pdf.append('<td>')
+        modelo_pdf.append(str(dado.valor_fatura))
+        modelo_pdf.append('</td>')
+        modelo_pdf.append('</tr>')
+    modelo_pdf.append('<table>')
+    modelo_pdf.append('</body></html>')
+
+    return ''.join(modelo_pdf)
+
+
+
 def pdf_generation(request):
-    html_template = []
-    html_template.append( '<ul>')
-    # Weasyprint
     fatura_list = Fatura.objects.filter(data_vencimento__lte=date.today()).order_by('data_vencimento')
+    html_template = gerar_arquivo(fatura_list, 'Lançamentos')
 
-    for f in fatura_list:
-        html_template.append('<li>{}</li>'.format(f.descricao))
-
-    html_template.append('<ul>')
-
-    pdf_file = HTML(string=''.join(html_template)).write_pdf()
+    pdf_file = HTML(string=html_template).write_pdf()
     response = HttpResponse(pdf_file, content_type='application/pdf')
     response['Content-Disposition'] = 'filename="teste.pdf"'
     return response
@@ -92,17 +119,9 @@ class FaturaListView(LoginRequiredMixin, View):
             fim = form.cleaned_data['data_final']
             descricao = form.cleaned_data['descricao']
 
-        if descricao is not None:
-            fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio,
-                                                data_vencimento__lte=fim,
-                                                descricao__icontains=descricao).order_by(
-                'data_vencimento')
-        else:
-            fatura_list = Fatura.objects.filter(data_vencimento__gte=inicio, data_vencimento__lte=fim).order_by(
-                'data_vencimento')
+        fatura_list = Fatura.objects.listar_faturas(inicio, fim, descricao)
 
         paginator = Paginator(fatura_list, 10)
-
         page = request.GET.get('page')
         faturas = paginator.get_page(page)
 
@@ -117,9 +136,9 @@ class FaturaListView(LoginRequiredMixin, View):
 
         hoje = date.today()
 
-        inicio = date.fromordinal(hoje.toordinal() - 45)  # hoje - 45 dias
+        inicio = date.fromordinal(hoje.toordinal() - 10)  # hoje - 10 dias
 
-        fim = date.fromordinal(hoje.toordinal() + 45)  # hoje + 45 dias
+        fim = date.fromordinal(hoje.toordinal() + 15)  # hoje + 15 dias
 
         form = PesquisaFaturaForm(initial={'data_inicial': inicio , 'data_final': fim})
 
@@ -191,13 +210,6 @@ class MovimentacaoView(LoginRequiredMixin, View):
                         if fatura.valor_pago == fatura.valor_fatura:
                             fatura.status = '2'
                             texto_mensagem = 'Lançamento quitado com sucesso'
-                            send_mail(
-                                'Finanças Familiar',  # Assunto
-                                'Lançamento {} - R$ {} quitado com sucesso'.format(fatura.descricao, fatura.valor_pago),
-                                # Corpo
-                                'diegodenzer.devops@gmail.com',
-                                ['diegodenzer.devops@gmail.com', 'simonetn.eng@hotmail.com']
-                            )
 
                         fatura.save()
                         # atualizando conta
