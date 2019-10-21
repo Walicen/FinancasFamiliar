@@ -29,7 +29,7 @@ requests==2.20.0
 requests-oauthlib==1.0.0
 simplejson==3.16.0
 six==1.11.0
-Twisted==18.7.0
+Twisted==19.7.0
 txaio==18.8.1
 urllib3==1.24
 view==0.1
